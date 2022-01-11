@@ -10,7 +10,7 @@ version:          1.0
 gitbook_version:  3.2.3
 
 url:              'https://junghoseong.github.io'
-baseurl:          '/'
+baseurl:          '/hoseong-gitbook'
 rss:              RSS
 
 toc:
