@@ -51,6 +51,43 @@
           </tbody></table>
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
+      <tr onmouseout="RSS_workshop_stop()" onmouseover="RSS_workshop_start()">
+        <td style="padding:16px;width:20%;vertical-align:middle">
+          <div class="one">
+            <div class="two" id='RSS_workshop_image'>
+              <img src='images/RSS_workshop_before.png' width="160"></div>
+            <img src='images/RSS_workshop_after.mp4' width="160">
+          </div>
+          <script type="text/javascript">
+            function RSS_workshop_start() {
+              document.getElementById('RSS_workshop_image').style.opacity = "1";
+            }
+
+            function RSS_workshop_stop() {
+              document.getElementById('RSS_workshop_image').style.opacity = "0";
+            }
+            RSS_workshop_stop()
+          </script>
+        </td>
+        <td style="padding:8px;width:80%;vertical-align:middle">
+          <span class="papertitle">Temporal Action Representation Learning for Aerial Maneuvering and Resource-Aware Decision-Making</span>
+          <br>
+          <strong>Hoseong Jung</strong>,
+          Sungil Son,
+          Daesol Cho,
+          Jonghae Park,
+          Changhyun Choi,
+          H. Jin Kim
+          <br>
+          <em>RSS workshop on Leveraging Implicit Methods for Aerial Autonomy</em>, 2025
+          <br>
+          <a href="https://im4rob.github.io/attend/papers/8_Temporal_Action_Representati.pdf">paper</a>
+          <p></p>
+          <p>
+          In this paper, we introduce a temporal action contrastive learning approach that facilitates semantic alignment between resource control and tactical maneuvers. </p>
+        </td>
+      </tr>
+
       <tr onmouseout="mdt_stop()" onmouseover="mdt_start()">
         <td style="padding:16px;width:20%;vertical-align:middle">
           <div class="one">
