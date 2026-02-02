@@ -69,6 +69,40 @@
           </tbody></table>
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
+
+            <tr onmouseout="EFXPLORER_stop()" onmouseover="EFXPLORER_start()">
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id='EFXPLORER_image'>
+                    <img src='images/EFXPLORER_before.pdf' width="160"></div>
+                    <img src='images/EFXPLORER_after.pdf' width="160">
+                </div>
+                <script type="text/javascript">
+                  function EFXPLORER_start() {
+                    document.getElementById('EFXPLORER_image').style.opacity = "1";
+                  }
+      
+                  function EFXPLORER_stop() {
+                    document.getElementById('EFXPLORER_image').style.opacity = "0";
+                  }
+                  EFXPLORER_stop()
+                </script>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <span class="papertitle">EFXPLORER: Cooperative Multi-Agent Reinforcement Learning \\ via Epigraph-Form Guided Exploration</span>
+                <br>
+                Sungil Son*,
+                <strong>Hoseong Jung*</strong>,
+                Dahyun Oh*
+                H. Jin Kim
+                <br>
+                <div><em>Under Review</em>, 2026</div>
+                <br>
+                <p></p>
+                <p>
+                  In this paper, we propose <i>EFXPLORER</i>, a constrained exploration framework that maximizes exploration objectives subject to a constraint that preserves established task performance.</td>
+            </tr>
+
       <tr onmouseout="RSS_workshop_stop()" onmouseover="RSS_workshop_start()">
         <td style="padding:16px;width:20%;vertical-align:middle">
           <div class="one">
