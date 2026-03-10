@@ -65,12 +65,46 @@
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
               <tr>
               <td style="padding:16px;width:100%;vertical-align:middle">
-                <h2>Research</h2>
+                <h2>Selected Publications</h2>
               </td>
             </tr>
           </tbody></table>
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
+            <tr onmouseout="LAMP_stop()" onmouseover="LAMP_start()">
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id='LAMP_image'>
+                    <img src='images/LAMP_before.jpg' width="160"></div>
+                    <img src='images/LAMP_after.jpg' width="160">
+                </div>
+                <script type="text/javascript">
+                  function LAMP_start() {
+                    document.getElementById('LAMP_image').style.opacity = "1";
+                  }
+      
+                  function LAMP_stop() {
+                    document.getElementById('LAMP_image').style.opacity = "0";
+                  }
+                  LAMP_stop()
+                </script>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <span class="papertitle">LAMP: Lane-Aligned Motion Primitives for Feasible Trajectory Prediction</span>
+                <br>
+                Sangjin Han<sup>*</sup>,
+                <strong>Hoseong Jung<sup>*</sup></strong>,
+                Jeongtae Her<sup>*</sup>,
+                Changhyun Choi,
+                H. Jin Kim
+                <br>
+                <div><em>Under Review</em>, 2026</div>
+                <br>
+                <p></p>
+                <p>
+                  In this paper, we propose <i>LAMP</i> (Lane-Aligned Motion Primitives), a topology-aware forecasting framework that anchors multimodal prediction to structured motion primitives aligned with lane topology.</td>
+            </tr>
+            
 
             <tr onmouseout="EFXPLORER_stop()" onmouseover="EFXPLORER_start()">
               <td style="padding:16px;width:20%;vertical-align:middle">
