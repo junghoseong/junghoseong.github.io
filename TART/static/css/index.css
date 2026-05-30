@@ -155,3 +155,90 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+.section-alt {
+  background-color: #f8fafc;
+}
+
+.experiments-block {
+  margin-bottom: 3rem;
+}
+
+.experiments-intro {
+  max-width: 900px;
+  margin: 0.5rem auto 1.5rem;
+  text-align: center;
+  color: #475569;
+}
+
+.experiments-tabs.pill-tabs ul {
+  border: none;
+  gap: 0.5rem;
+}
+
+.experiments-tabs.pill-tabs li a {
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #334155;
+}
+
+.experiments-tabs.pill-tabs li.is-active a {
+  background: #363636;
+  border-color: #363636;
+  color: #fff;
+}
+
+.experiments-panel {
+  display: none;
+}
+
+.experiments-panel.is-active {
+  display: block;
+}
+
+.result-table-wrapper {
+  overflow-x: auto;
+  margin: 0 auto;
+}
+
+.result-table {
+  font-size: 0.85rem;
+  margin: 0 auto;
+}
+
+.result-table th {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.result-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.result-table td:first-child,
+.result-table th:first-child {
+  text-align: left;
+}
+
+.publication-venue-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.section-figure {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+}

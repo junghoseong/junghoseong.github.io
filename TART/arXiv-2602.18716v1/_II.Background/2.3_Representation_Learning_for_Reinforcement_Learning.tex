@@ -1,0 +1,6 @@
+Representation learning in RL has primarily focused on learning compact state representations for sample efficiency, often through self-supervised objectives such as contrastive learning~\cite{allshire2021laser, biza2025robot, oord2018representation}.
+Beyond state encoding, several methods learn embeddings of state-action pairs~\cite{allshire2021laser, zheng2023taco}.
+For example, TACO~\cite{zheng2023taco} maximizes mutual information between state-action pairs and future states to obtain action embeddings.
+Another key problem is capturing behavioral multi-modality, where the same context can lead to diverse plausible futures~\cite{zhu2023imitation}.
+To address this, another line of work discretizes trajectories into vector-quantized codebooks, encouraging multi-modal behaviors~\cite{luo2023action, van2017neural}.
+However, these approaches do not capture the temporal coupling between a discrete resource-usage decision and the distribution over subsequent continuous maneuvers in hybrid action spaces.

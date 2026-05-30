@@ -1,0 +1,23 @@
+Since direct computation of mutual information is typically intractable, we instead optimize a tractable lower bound using InfoNCE~\cite{oord2018representation}:
+\begin{equation}
+    \mathcal{I}(X;Y) \geq \log(N) - \mathcal{L}_{\text{NCE}},
+    \label{eq:lower_bound}
+\end{equation}
+where $N$ denotes the number of samples and $\mathcal{L}_{\text{NCE}}$ is the InfoNCE loss. 
+To instantiate this bound for $\mathbb{J}_{\text{TART}}$, we form pairs between a context summarizing the state history and the discrete action, and a future continuous maneuver descriptor.
+
+Let the context projector $\mathcal{H}$ and the future projector $\mathcal{P}$ map to a common embedding space:
+\begin{equation}
+    h_t = \mathcal{H}([z_{t-K+1:t}, u_{t, d}]), \quad p_t = \mathcal{P}(u_{t:t+K-1,c}).
+    \label{eq:projector}
+\end{equation}
+Given an anchor representation $h_t$, the positive sample is $p_t$ and the negatives are the in-batch items $\mathbf{v} \in \mathcal{N}_t$, where $\mathcal{N}_t :=\{\mathcal{P}(u_{s:s+K-1,c}^{(n)}) | (n, s) \neq (\text{current traj}, t)\}$ denotes embeddings from other time steps or trajectories in the batch.
+The InfoNCE loss encourages the anchor to be similar to the positive while dissimilar to the negatives:
+\begin{equation}
+    \small
+    \mathcal{L}_{\text{NCE}} = -\log \frac{\exp(\text{sim}(h_t, p_t))}{\exp(\text{sim}(h_t, p_t)) + \sum_{\mathbf{v} \in \mathcal{N}_t}\exp(\text{sim}(h_t, \mathbf{v}))},
+    \label{eq:NCE}
+\end{equation}
+where $\text{sim}(x, y)=x^\top W y/\tau$ is a learnable bilinear similarity function with parameter $W$ and temperature $\tau>0$.
+This construction directly matches the objective Eq.~\eqref{eq:TART_objective}: the context $h_t$ encodes the state trajectory and the discrete action choice, while the positive $p_t$ encodes future continuous maneuvers over the horizon $K$.
+Inspired by TACO~\cite{zheng2023taco}, we additionally augment positives with temporally adjacent segments from the same episode to improve sample efficiency; negatives are temporally shuffled within a batch to reduce shortcut cues.

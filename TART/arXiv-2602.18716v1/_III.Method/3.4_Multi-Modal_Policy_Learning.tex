@@ -1,0 +1,25 @@
+To exploit the clustered action representations obtained via contrastive learning, we aim to represent them as quantized tactical modes that guide the policy in generating diverse maneuver distributions.
+We instantiate these modes with a Vector Quantization (VQ) codebook~\cite{van2017neural}.
+Let $\mathcal{C}=\{c_1, ..., c_M\}$ denote the set of learnable codebook entries, where each $c_i \in \mathbb{R}^d$.
+Given a state-action segment $\tau_t=\{(s_{t'}, a_{t'}), ..., (s_{t}, a_{t})\}$, with $t'=t-K+1$, we obtain embeddings $\{z_{t'}, ..., z_{t}\}$ and $\{u_{t', d}, ..., u_{t,d}\}$, $\{u_{t', c}, ..., u_{t,c}\}$ via the encoders $\phi$, $\psi_d$, $\psi_c$ (Section~III.A.).
+The context encoder used in Eq.~\eqref{eq:NCE} summarizes $h_t=\mathcal{H}([z_{t':t}, u_{t, d}])$ and we quantize by applying nearest neighbor in $\ell_2$-distance:
+\begin{equation}
+    i_t = \argmin_m ||h_t - c_m||_2, \quad q_t=c_{i_t}.
+    \label{eq:indexing}
+\end{equation}
+The latent code $q_t$ serves as a tactical mode and conditions the maneuver policy.
+We factorize the hybrid policy as:
+\begin{equation}
+    \footnotesize
+    \pi_\theta(a_{t,d}, a_{t,c}|s_t, q_t) = \underbrace{\pi_d(a_{t,d}|s_t)}_{\text{discrete actor}}\cdot \underbrace{\pi_c(a_{t,c}|s_t, a_{t,d}, q_t)}_{\text{continuous actor}}.
+    \label{eq:hybrid_policy_factorized}
+\end{equation}
+At inference, the pipeline is $s_t \xrightarrow{\pi_d} a_{t,d}$, then $h_t$ is encoded and quantized to $q_t$, and finally $\pi_c(a_{t,c}|s_t, a_{t,d}, q_t)$ generates the continuous maneuver; thus the discrete actor precedes, then the continuous actor is tactic-guided.
+
+To learn effective quantized representations, we employ the standard vector quantization objective, consisting of a reconstruction loss and a commitment loss:
+\begin{equation}
+    \mathcal{L}_{\text{VQ}} = ||h_t - \hat{h}_t||^2 +  ||\text{sg}[h_t] - c_{i_t}||^2 + \beta || h_t - \text{sg}[c_{i_t}]||^2,
+    \label{eq:VQ}
+\end{equation}
+where $\hat{h}_t$ is the reconstruction of the embedding from the codebook, $\text{sg}[\cdot]$ denotes the stop-gradient operator, and $\beta > 0$ is a hyperparameter that balances the commitment strength.
+The VQ encoder is optimized to produce embeddings $h_t$ that closely match their assigned codebook entries, while the codebook itself adapts to reflect the encoder outputs.

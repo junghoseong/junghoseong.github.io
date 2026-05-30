@@ -1,0 +1,52 @@
+\begin{algorithm}[t!]
+	\small
+	\textbf{Init} actor $\pi_d, \pi_c$ and critic $V_{\omega}$\\
+	\textbf{Init} encoders $\phi, \psi_d, \psi_c$ and projectors $\mathcal{H}, \mathcal{P}$\\
+        \textbf{Init} codebook $C=\{c_1, ..., c_M\}, c_i \sim \mathcal{N}(0, \sigma^2I_d)$\\
+	Prepare replay buffer $\mathcal{D}$\\
+	\Repeat( Stage 1: Warm-up){reaching maximum warm-up steps}{
+        Sample batch $\mathcal{B}$ from replay buffer $\mathcal{D}$\\
+		Update $\phi, \psi_d, \psi_c, \mathcal{H}, \mathcal{P}$ using Eqs.~\eqref{eq:NCE} and~\eqref{eq:VQ}\\
+	}
+	
+	\Repeat( Stage 2: Main loop){reaching maximum total environment steps}{
+		\For{t  $\leftarrow$  1  to $ T$}{
+			% Observe state $s_t$ and select action
+			\textcolor{blue}{// select discrete tactical modes to guide policy}\\
+                observe $s_t$; $a_{t, d} \sim \pi_d(\cdot|s_t), z_t=\phi(s_t),$\\
+                $u_{t,d}=\psi_d(a_{t,d}), h_t=\mathcal{H}([z_{t-K+1:t}, u_{t,d}])$\\
+			$i_t=\argmin_m||h_t-c_m||_2, q_t=\text{sg}[c_{i_t}]$\\
+			\textcolor{blue}{// generate continuous maneuvers}\\
+			$a_{t,c}\sim \pi_c(\cdot|s_t, a_{t,d}, q_t)$\\ 	Execute $a_{t,d}, a_{t,c}$, observe $r_t$ and new state $s_{t+1}$\\
+			Store $\{s, a_{t,d}, a_{t,c}, r, s_{t+1}, q_t, \log\pi_d, \log\pi_c\}$ in $\mathcal{D}$\\
+			%// perform latent policy learning\\
+			Sample a mini-batch of $N$ experiences from $\mathcal{D}$\\
+			Update $\pi_d, \pi_c, V_\omega$ with the PPO objective~\cite{schulman2017proximal}\\
+		}
+		
+		\Repeat{reaching maximum representation training steps}{
+			Update $\phi, \psi_d, \psi_c, \mathcal{H}, \mathcal{P}$ using Eqs.~\eqref{eq:NCE} and~\eqref{eq:VQ}
+		}
+        }
+	\caption{TART-PPO}
+	\label{alg:TART-PPO}
+\end{algorithm}
+
+We train TART with a unified on-policy workflow that interleaves representation learning and policy optimization, as shown in Algorithm~\ref{alg:TART-PPO}. 
+The procedure consists of two stages.
+In the warm-up stage, we collect exploratory rollouts and fit the representation modules by minimizing the loss function in Eqs.~\eqref{eq:NCE} and~\eqref{eq:VQ}.
+This yields latent codes that capture tactical structure before RL training.
+
+In the main loop, PPO~\cite{schulman2017proximal} optimizes the factorized hybrid policy.
+We implement the critic $V_\omega$ with a shared state backbone and two value heads.
+The discrete head depends on the state $s_t$ and provides a baseline for the discrete actor $\pi_d(a_{t,d}|s_t)$. The continuous head takes the state $s_t$, the chosen discrete action $a_d$, and the tactical code $q_t$ to support the continuous actor $\pi_c(a_{t,c}|s_t, a_{t,d}, q_t)$.
+The shared critic backbone improves sample efficiency, while the distinct heads provide actor-specific baselines that reduce variance, stabilize training, and capture multi-modality.
+
+The overall loss function is as follows:
+\begin{equation}
+    \mathcal{L}_{\text{total}}=\underbrace{\mathcal{L}_{\text{RL}}}_{\text{PPO for } \pi_d, \pi_c} + \lambda_{\text{NCE}}\mathcal{L}_{\text{NCE}}+\lambda_{\text{VQ}}\mathcal{L}_{\text{VQ}},
+    \label{eq:overall_loss}
+\end{equation}
+where $\mathcal{L}_{\text{NCE}}$ and $\mathcal{L}_{\text{VQ}}$ are the InfoNCE loss and VQ loss as in Eqs.~\eqref{eq:NCE}) and~\eqref{eq:VQ}. 
+$\lambda_{\text{NCE}}$ and $\lambda_{\text{VQ}}$ are balancing parameters.
+$\mathcal{L}_{\text{RL}}$ is the standard PPO objective with a shared critic, entropy regularization, and separate discrete and continuous heads; gradients from $\mathcal{L}_{\text{RL}}$ do not update the codebook.

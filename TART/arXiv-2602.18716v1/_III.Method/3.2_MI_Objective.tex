@@ -1,0 +1,44 @@
+We begin by presenting the temporal action representation learning objective of TART.
+The guiding principle of our method is to learn state and action representations that capture temporal dependencies essential for effective control under hybrid actions and resource constraints.
+We quantify statistical dependence using mutual information (MI), denoted $\mathcal{I}(X;Y)$, which is a reparameterization-invariant measure of dependency:
+\begin{equation}
+    \mathcal{I}(X;Y)=\mathbb{E}_{p(x,y)} \log [\frac{p(x,y)}{p(x)p(y)}] = H(X) - H(X|Y),
+    \label{eq:MI}
+\end{equation}
+where $X$ and $Y$ represent either raw samples or stochastic representations from a data distribution.
+
+We define the state embedding $z_t=\phi(s_t)$ and the hybrid action embeddings $u_{t,d}=\psi_d(a_{t,d})$ and $u_{t,c}=\psi_c(a_{t,c})$ for the discrete and continuous components, where $s_t$, $a_{t, d}$, and $a_{t,c}$ denote the raw state and hybrid action components.
+Here, $\phi$ and $\psi_d$, $\psi_c$ serve as encoders for the state $s_t$, and the action components $a_{t,d}$ and $a_{t,c}$, respectively.
+An MI objective is adopted over a fixed horizon $K$:
+\begin{equation}
+    \mathbb{J}_{\text{TART}} = \mathcal{I}(u_{t:t+K-1,c};[z_{t-K+1:t}, u_{t,d}]).
+    \label{eq:TART_objective}
+\end{equation}
+Intuitively, maximizing $\mathbb{J}_{\text{TART}}$ preserves the predictive information linking the state history (including the current state) and the discrete decision to the future continuous maneuver sequence, thereby promoting temporally coherent control.
+
+Eq.~\eqref{eq:TART_objective} aims to learn state-action representations sufficient for optimal value estimation in hybrid action spaces.
+To formalize this property targeted by TART, we extend the $Q^*$-sufficiency notions introduced by~\cite{rakelly2021which} to hybrid action settings.
+Intuitively, joint $Q^*$-sufficiency is a representational property: if $(\phi, \psi_d, \psi_c)$ is jointly $Q^*$-sufficient, then the optimal action-value $Q^*$ can be evaluated without loss of information in the representation space.
+
+\newtheorem{definition}{Definition}
+\begin{definition}
+    (Joint $Q^*$-sufficiency for hybrid actions).\\
+    Let $\phi: \mathcal{S} \rightarrow \mathcal{Z}$, $\psi_d : \mathcal{A}_d \rightarrow \mathcal{U}_d,$ and $\psi_c: \mathcal{A}_c \rightarrow \mathcal{U}_c$ be state, discrete-action, and continuous-action encoders.
+    For a set of reward functions $\mathcal{R}$, the triplet $(\phi, \psi_d, \psi_c)$ is jointly $Q^*$-sufficient w.r.t. $\mathcal{R}$ if $\forall r \in \mathcal{R}, s_1, s_2 \in \mathcal{S}, a_1, a_2 \in \mathcal{X},$ 
+\begin{equation*}
+\begin{aligned}
+    \phi(s_1)=\phi(s_2), \, \psi_d(a_{1, d})=\psi_d(a_{2,d}), \, \psi_c(a_{1, c})=\psi_c(a_{2, c}) \\ \Rightarrow Q_r^*(s_1, (a_{1, d}, a_{1, c})) = Q_r^*(s_2, (a_{2, d}, a_{2, c})).
+\end{aligned}
+\end{equation*}
+Equivalently, there exists a measurable $\tilde{Q}$ such that $Q_r^*(s, a)=\tilde{Q}(\phi(s), (\psi_d(a_d), \psi_c(a_c)))$.
+\label{def:1}
+\end{definition}
+ % (instantiated as $\mathbb{J}_{\text{TART}}$ in our method)
+For a generic objective $\mathbb{J}$, we define the maximizer set:
+\begin{equation}
+    \Phi_\mathbb{J} = \argmax_{(\phi', \psi'_d, \psi'_c) \in \mathcal{F} \times \mathcal{G}_d \times \mathcal{G}_c} \mathbb{J}(\phi', \psi'_d, \psi'_c),
+\end{equation}
+where $\mathcal{F}, \mathcal{G}_d$ and $\mathcal{G}_c$ denote the function classes for the state, discrete-action, and continuous-action encoders.
+Then an objective $\mathbb{J}$ is jointly $Q^*$-sufficient with respect to $\mathcal{R}$ if every maximizer $(\phi, \psi_d, \psi_c) \in \Phi_\mathbb{J}$ satisfies Definition~\ref{def:1}.
+In our method, $\mathbb{J}$ is instantiated as Eq.~\eqref{eq:TART_objective}; under standard assumptions on the PAMDP and consistent MI estimation, this objective promotes representations approaching joint $Q^*$-sufficiency for value estimation in hybrid action settings.
+Consequently, there exist measurable $\tilde{Q}, \tilde{V}$ that factor through $(\phi, \psi_d, \psi_c)$, justifying their use for actor-critic training built on these representations.

@@ -1,0 +1,413 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+
+
+\IEEEoverridecommandlockouts                           
+\overrideIEEEmargins    
+
+\usepackage{times}
+% numbers option provides compact numerical references in the text. 
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{caption}
+% \usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{romannum}
+\usepackage{amsmath,amssymb}
+% \usepackage{amsmath}
+\usepackage{url}
+\usepackage{bm}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{cite}
+
+\newcommand{\Tref}[1]{Table~\ref{#1}}
+\newcommand{\Eref}[1]{Eq.~(\ref{#1})}
+% \newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{arydshln}
+% \newcommand{\cmark}{\ding{51}}%
+% \newcommand{\xmark}{\ding{55}}%
+\usepackage{tabularx}
+    % \newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\let\OldStatex\Statex
+\renewcommand{\Statex}[1][3]{%
+  \setlength\@tempdima{\algorithmicindent}%
+  \OldStatex\hskip\dimexpr#1\@tempdima\relax}
+\renewcommand{\ALG@beginalgorithmic}{\normalsize}
+
+\renewcommand{\labelenumi}{\roman{enumi})}
+\newcommand{\rpartial}{{\mathrm{\partial}}}
+\newcommand{\rinf}{{\mathrm \inf}}
+\newcommand{\rd}{{\mathrm d}}
+\newcommand{\rdelta}{{\mathrm \delta}}
+\newcommand{\rtr}{{\mathrm{tr}}}
+\newcommand{\rP}{{\mathrm{P}}}
+\newcommand{\rT}{{\mathrm{T}}}
+\newcommand{\rvec}{{\mathrm{vec}}}
+\newcommand{\rtau}{{\mathrm{\tau}}}
+\newcommand{\va}{{\bf a}}
+\newcommand{\vb}{{\bf b}}
+\newcommand{\vc}{{\bf c}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\vp}{{\bf p}}
+\newcommand{\dvx}{{\bf dx}}
+\newcommand{\vdu}{{\bf du}}
+\newcommand{\vdy}{{\bf dy}}
+\newcommand{\vq}{{\bf q}}
+\newcommand{\vo}{{\bf o}}
+\newcommand{\vt}{{\bf t}}
+\newcommand{\vr}{{\bf r}}
+\newcommand{\vs}{{\bf  s}}
+\newcommand{\vf}{{\bf f}}
+\newcommand{\vg}{{\bf g}}
+\newcommand{\vG}{{\bf G}}
+\newcommand{\vu}{{\bf u}}
+\newcommand{\vU}{{\bf U}}
+\newcommand{\vv}{{\bf  v}}
+\newcommand{\vI}{{\bf I}}
+\newcommand{\vh}{{\bf h}}
+\newcommand{\vk}{{\bf k}}
+\newcommand{\vl}{{\bf l}}
+\newcommand{\vdx}{{\bf dx}}
+\newcommand{\vdw}{{\bf dw}}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vW}{{\bf W}}
+\newcommand{\vA}{{\bf A}}
+\newcommand{\vR}{{\bf R}}
+\newcommand{\vE}{{\bf E}}
+\newcommand{\vL}{{\bf L}}
+\newcommand{\vK}{{\bf K}}
+\newcommand{\vJ}{{\bf J}}
+\newcommand{\vF}{{\bf F}}
+\newcommand{\vM}{{\bf M}}
+\newcommand{\vD}{{\bf D}}
+\newcommand{\vN}{{\bf N}}
+\newcommand{\vV}{{\bf V}}
+\newcommand{\vH}{{\bf H}}
+\newcommand{\vT}{{\bf T}}
+\newcommand{\vC}{{\bf C}}
+\newcommand{\vO}{{\bf O}}
+\newcommand{\vQ}{{\bf Q}}
+\newcommand{\vB}{{\bf B}}
+\newcommand{\vS}{{\bf S}}
+\newcommand{\vX}{{\bf X}}
+\newcommand{\vY}{{\bf Y}}
+\newcommand{\vP}{{\bf P}}
+\newcommand{\rank}{{\text{rank}}}
+\newcommand{\vect}{{\text{vec}}}
+\newcommand{\vxi}{{\mbox{\boldmath$\xi$}}}
+\newcommand{\vpi}{{\mbox{\boldmath$\pi$}}}
+\newcommand{\vdomega}{{\bf d\omega}}
+\newcommand{\vlambda}{{\mbox{\boldmath$\lambda$}}}
+\newcommand{\vBamma}{{\mbox{\boldmath$\Gamma$}}}
+\newcommand{\VTheta}{{\mbox{\boldmath$\Theta$}}}
+\newcommand{\VPhi}{{\mbox{\boldmath$\Phi$}}}
+\newcommand{\vphi}{{\mbox{\boldmath$\phi$}}}
+\newcommand{\VPsi}{{\mbox{\boldmath$\Psi$}}}
+\newcommand{\ve}{{\mbox{\boldmath$\epsilon$}}}
+\newcommand{\VSigma}{{\mbox{\boldmath$\Sigma$}}}
+\newcommand{\valpha}{{\mbox{\boldmath$\alpha$}}}
+\newcommand{\vmu}{{\mbox{\boldmath$\mu$}}}
+\newcommand{\vbeta}{{\mbox{\boldmath$\beta$}}}
+\newcommand{\vomega}{{\mbox{\boldmath$\omega$}}}
+\newcommand{\vtau}{{\mbox{\boldmath$\tau$}}}
+\newcommand{\vdtau}{{\mbox{\boldmath$d\tau$}}}
+\newcommand{\vtheta}{{\mbox{\boldmath$\theta$}}}\newcommand{\dataset}{{\cal D}}
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+\newcommand{\vcalS}{{\mbox{\boldmath$\cal{S}$}}}
+\newcommand{\vcalU}{{\mbox{\boldmath$\cal{U}$}}}
+\newcommand{\vcalD}{{\mbox{\boldmath$\cal{D}$}}}
+\newcommand{\vcalJ}{{\mbox{\boldmath$\cal{J}$}}}
+\newcommand{\vcalE}{{\mbox{\boldmath$\cal{E}$}}}
+\newcommand{\vcalF}{{\mbox{\boldmath$\cal{F}$}}}
+\newcommand{\vcalL}{{\mbox{\boldmath$\cal{L}$}}}
+\newcommand{\vcalZ}{{\mbox{\boldmath$\cal{Z}$}}}
+\newcommand{\vcalG}{{\mbox{\boldmath$\cal{G}$}}}
+\newcommand{\vcalN}{{\mbox{\boldmath$\cal{N}$}}}
+\newcommand{\vcalM}{{\mbox{\boldmath$\cal{M}$}}}
+\newcommand{\vcalH}{{\mbox{\boldmath$\cal{H}$}}}
+\newcommand{\vcalC}{{\mbox{\boldmath$\cal{C}$}}}
+\newcommand{\vcalO}{{\mbox{\boldmath$\cal{O}$}}}
+\newcommand{\vcalP}{{\mbox{\boldmath$\cal{P}$}}}
+\newcommand{\vcalB}{{\mbox{\boldmath$\cal{B}$}}}
+\newcommand{\vcalA}{{\mbox{\boldmath$\cal{A}$}}}
+\newcommand{\vcalg}{{\mbox{\boldmath$\cal{g}$}}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\T}{^\mathsf{T}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calN}{\mathcal{N}}
+
+\newcommand{\fu}{\frac{\partial \vf}{\partial \vu}}
+\DeclareMathOperator{\Tr}{Tr}
+
+\newcommand{\Qb}{\mathbb{Q}}
+\newcommand{\Db}{\mathbb{D}}
+\newcommand{\Pb}{\mathbb{P}}
+\newcommand{\Fb}{\mathbb{F}}
+\newcommand{\Hb}{\mathbb{H}}
+\newcommand{\Rb}{\mathbb{R}}
+\newcommand{\Xspace}{\mathcal{X}}
+\newcommand{\snew}{\mathbf{x}^\prime}
+\newcommand{\s}{\mathbf{x}}
+\newcommand{\Pas}[2]{\mathcal{P}\left({#1}|{#2}\right)}
+\newcommand{\Pol}[2]{\mathcal{U}\left({#1}|{#2}\right)}
+\newcommand{\PolOpt}[2]{\mathcal{U}^{*}\left({#1}|{#2}\right)}
+\newcommand{\PolPasT}[1]{\mathcal{P}\left({#1}\right)}
+\newcommand{\PolT}[1]{\mathcal{U}\left({#1}\right)}
+\newcommand{\traj}{\mathbf{X}}
+\newcommand{\KL}[2]{\mathbb{D}_{\mathrm{KL}}\left({#1}\parallel {#2}\right)}
+\newcommand{\costt}[1]{\mathcal{J}\left({#1}\right)}
+\newcommand{\logb}[1]{\log\left({#1}\right)}
+\newcommand{\expb}[1]{\exp\left({#1}\right)}
+\newcommand{\val}[2]{\mathit{V}_{#2}\left({#1}\right)}
+\newcommand{\zt}[2]{\Phi_{#2}\left({#1}\right)}
+\newcommand{\nZ}[2]{\mathcal{G}_t[\Phi]\left({#1}\right)}
+\newcommand{\ExP}[2]{\E_{{#1}}{\left[#2\right]}}
+\newcommand{\vnu}{{\bf \nu}}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\DeclareCaptionFont{mysize}{\fontsize{8}{9.6}\selectfont}
+\captionsetup{font=mysize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\LARGE \bf Temporal Action Representation Learning 
+\\for Tactical Resource Control and Subsequent Maneuver Generation}
+
+
+\author{Anonymous Authors}
+\author{Hoseong Jung, Sungil Son, Daesol Cho, Jonghae Park, Changhyun Choi, H. Jin Kim$^{*}$
+\thanks{This work was partly supported by Institute of Information \& communications Technology Planning \& Evaluation (IITP) grant funded by the Korea government (MSIT) [NO.RS-2021-II211343, Artificial Intelligence Graduate School Program (Seoul National University)] and Hyundai Motor Chung Mong-Koo Foundation.}
+\thanks{Hoseong Jung, Jonghae Park, Changhyun Choi, and H. Jin Kim are with Seoul National University, Republic of Korea.
+Sungil Son is with Seoul National University and Life Assistant Robotics, Republic of Korea.
+Daesol Cho is with the Georgia Institute of Technology, USA.}
+\thanks{$^*$Corresponding author}}%
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+Autonomous robotic systems should reason about resource control and its impact on subsequent maneuvers, especially when operating with limited energy budgets or restricted sensing.
+Learning-based control is effective in handling complex dynamics and represents the problem as a hybrid action space unifying discrete resource usage and continuous maneuvers.
+However, prior works on hybrid action space have not sufficiently captured the causal dependencies between resource usage and maneuvers.
+They have also overlooked the multi-modal nature of tactical decisions, both of which are critical in fast-evolving scenarios.
+In this paper, we propose TART, a Temporal Action Representation learning framework for Tactical resource control and subsequent maneuver generation.
+TART leverages contrastive learning based on a mutual information objective, designed to capture inherent temporal dependencies in resource-maneuver interactions.
+These learned representations are quantized into discrete codebook entries that condition the policy, capturing recurring tactical patterns and enabling multi-modal and temporally coherent behaviors.
+We evaluate TART in two domains where resource deployment is critical: (i) a maze navigation task where a limited budget of discrete actions provides enhanced mobility, and (ii) a high-fidelity air combat simulator in which an F-16 agent operates weapons and defensive systems in coordination with flight maneuvers.
+Across both domains, TART consistently outperforms hybrid-action baselines, demonstrating its effectiveness in leveraging limited resources and producing context-aware subsequent maneuvers.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+\input{_I.Introduction/1.1_Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background and Related Work}
+\subsection{Parameterized Action Markov Decision Process}
+\input{_II.Background/2.1_PAMDP}
+\subsection{Reinforcement Learning for Hybrid Action Spaces}
+\input{_II.Background/2.2_Reinforcement_Learning_for_Hybrid_Action_Spaces}
+\subsection{Representation Learning for Reinforcement Learning}
+\input{_II.Background/2.3_Representation_Learning_for_Reinforcement_Learning}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{METHODS}
+\input{_III.Method/3.1_Overview}
+\subsection{Objective for Temporal Action Representation Learning}
+\input{_III.Method/3.2_MI_Objective}
+\subsection{Learning a Latent Action Representation}
+\input{_III.Method/3.3_Learning_Action_Representation}
+\subsection{Tactic-Guided Maneuver Generation}
+\input{_III.Method/3.4_Multi-Modal_Policy_Learning}
+\subsection{Training Protocol and Overall Objective}
+\input{_III.Method/3.5_Overall_Objective}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Evaluation Environments}
+\input{_IV.Experimental_Setup/4.1_Overview}
+\subsection{Maze Navigation}
+\input{_IV.Experimental_Setup/4.2_Maze_Navigation_Environment}
+\subsection{Air-to-Air Combat}
+\input{_IV.Experimental_Setup/4.3_Air_to_Air_Combat_Environment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results}
+\input{_V.Experimental_Results/5.1_Overview}
+\subsection{Comparison with PAMDP Baselines}
+\input{_V.Experimental_Results/5.2_Main_Results}
+\subsection{Ablation Studies}
+\input{_V.Experimental_Results/5.3_Ablation_Study}
+\subsection{Qualitative Analysis}
+\input{_V.Experimental_Results/5.4_Discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CONCLUSION}
+\input{_VI.Conclusion/6.1_Conclusion}
+\addtolength{\textheight}{0cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+
+\bibliographystyle{IEEEtran}
+\bibliographystyle{plainnat}
+\begin{thebibliography}{1}
+    \bibitem{gerkey2004formal}
+    B. P. Gerkey and M. J. Matari{\'c}, ``A formal analysis and taxonomy of task allocation in multi-robot systems,'' \emph{The International Journal of Robotics Research}, vol. 23, no. 9, pp. 939--954, 2004.
+
+    \bibitem{afrin2021resource}
+    M. Afrin, J. Jin, A. Rahman, \textit{et al.}, ``Resource allocation and service provisioning in multi-agent cloud robotics: A comprehensive survey,'' \emph{IEEE Communications Surveys \& Tutorials}, vol. 23, no. 2, pp. 842--870, 2021.
+
+    \bibitem{dai2022multi}
+    Z. Dai, Y. Zhang, W. Zhang, \textit{et al.}, ``A multi-agent collaborative environment learning method for {{UAV}} development and resource allocation,'' \emph{IEEE Transactions on Signal and Information Processing over Networks}, vol. 8, pp. 120--130, 2022.
+
+    \bibitem{hai2025replanning}
+    X. Hai, L. Tan, Q. Feng, \textit{et al.}, ``Replanning-oriented framework for efficient real-time decision-making in multi-{{UAV}} systems,'' \emph{IEEE Transactions on Industrial Informatics}, 2025.
+
+    \bibitem{liao2025sa}
+    H. Liao, Z. Li, K. Zhu, \textit{et al.}, ``{{SA-TP}}$^2$: A safety-aware trajectory prediction and planning model for autonomous driving,'' \emph{IEEE Transactions on Robotics}, 2025.
+
+    \bibitem{hausknecht2015deep}
+    M. J. Hausknecht and P. Stone, ``Deep reinforcement learning in parameterized action space,'' in \emph{Proceedings of the International Conference on Learning Representations}, 2016.
+
+    \bibitem{masson2016reinforcement}
+    W. Masson, P. Ranchod, and G. Konidaris, ``Reinforcement learning with parameterized actions,'' in \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, vol. 30, no. 1, 2016.
+
+    \bibitem{xiong2018parametrized}
+    J. Xiong, Q. Wang, Z. Yang, \textit{et al.}, ``Parametrized deep {{Q}}-networks learning: Reinforcement learning with discrete-continuous hybrid action space,'' \emph{arXiv preprint arXiv:1810.06394}, 2018.
+
+    \bibitem{fan2019hybrid}
+    Z. Fan, R. Su, W. Zhang, and Y. Yu, ``Hybrid actor-critic reinforcement learning in parameterized action space,'' in \emph{Proceedings of the International Joint Conference on Artificial Intelligence}, 2019, pp. 2279--2285.
+
+    \bibitem{li2021hyar}
+    B. Li, H. Tang, Y. Zheng, \textit{et al.}, ``Hy{{AR}}: Addressing discrete-continuous action reinforcement learning via action representation,'' in \emph{Proceedings of the International Conference on Learning Representations}, 2022.
+
+    \bibitem{wu2025discrete}
+    K. Wu, Y. Zhu, J. Li, \textit{et al.}, ``Discrete policy: Learning disentangled action space for multi-task robotic manipulation,'' in \emph{Proceedings of the International Conference on Robotics and Automation}, 2025, pp. 8811--8818.
+
+    \bibitem{ze2023visual}
+    Y. Ze, N. Hansen, Y. Chen, \textit{et al.}, ``Visual reinforcement learning with self-supervised 3d representations,'' \emph{IEEE Robotics and Automation Letters}, vol. 8, no. 5, pp. 2890--2897, 2023.
+
+    % \bibitem{chandak2019learning}
+    % Y. Chandak, G. Theocharous, J. Kostas, \textit{et al.}, ``Learning action representations for reinforcement learning,'' in \emph{Proceedings of the International Conference on Machine Learning}, 2019, pp. 941--950.
+
+    % \bibitem{stooke2021decoupling}
+    % A. Stooke, K. Lee, P. Abbeel and M. Laskin, ``Decoupling representation learning from reinforcement learning,'' in \emph{Proceedings of the International Conference on Machine Learning}, 2021, pp. 9870--9879.
+
+    \bibitem{biza2025robot}
+    O. Biza, T. Weng, L. Sun, \textit{et al.}, ``On-robot reinforcement learning with goal-contrastive rewards,'' in \emph{Proceedings of the International Conference on Robotics and Automation}, 2025, pp. 4797--4805.
+
+    \bibitem{bu2025univla}
+    Q. Bu, Y. Yang, J. Cai, \textit{et al.}, ``Uni{{VLA}}: Learning to act anywhere with task-centric latent actions,'' in \emph{Proceedings of the Robotics: Science and Systems}, 2025.
+
+    \bibitem{mehta2022learning}
+    S. A. Mehta, S. Parekh, and D. P. Losey, ``Learning latent actions without human demonstrations,'' in \emph{Proceedings of the International Conference on Robotics and Automation}, 2022, pp. 7437--7443.
+
+    \bibitem{luo2023action}
+    J. Luo, P. Dong, J. Wu, \textit{et al.}, ``Action-quantized offline reinforcement learning for robotic skill learning,'' in \emph{Proceedings of the Conference on Robot Learning,} 2023, pp. 1348--1361.
+
+    \bibitem{zhu2023imitation}
+    S. Zhu, R. Kaushik, S. Kaski, and V. Kyrki, ``Imitation-guided multimodal policy generation from behaviourally diverse demonstrations,'' in \emph{Proceedings of the International Conference on Intelligent Robots and Systems}, 2022, pp. 1675--1682.
+    
+    % \bibitem{li2024learning}
+    % S. Li, R. Krohn, T. Chen, \textit{et al.}, ``Learning multimodal behaviors from scratch with diffusion policy gradient,'' \emph{Advances in Neural Information Processing Systems}, vol. 27, pp. 38456--38479, 2024.
+
+    \bibitem{oord2018representation}
+    A. Van Den Oord, Y. Li, and O. Vinyals, ``Representation learning with contrastive predictive coding,'' \emph{arXiv preprint arXiv:1807.03748}, 2018.
+
+    \bibitem{van2017neural}
+    A. Van Den Oord and O. Vinyals, ``Neural discrete representation learning,'' \emph{Advances in Neural Information Processing Systems}, vol. 30, 2017.
+
+    \bibitem{schulman2017proximal}
+    J. Schulman, F. Wolski, P. Dhariwal, \textit{et al.}, ``Proximal policy optimization algorithms,'' \emph{arXiv preprint arXiv:1707.06347}, 2017.
+
+    \bibitem{luo2024reinforcement}
+    H. Luo, Y. Bie, and S. Jin, ``Reinforcement learning for traffic signal control in hybrid action space,'' \emph{IEEE Transactions on Intelligent Transportation Systems}, vol. 25, no. 6, pp. 5225--5241, 2024.
+
+    \bibitem{pan2022learn}
+    F. Pan, T. Zhang, L. Luo, \textit{et al.}, ``Learn continuously, act discretely: Hybrid action-space reinforcement learning for optimal execution,'' in \emph{arXiv preprint arXiv:2207.11152}, 2022.
+
+    \bibitem{neunert2020continuous}
+    M. Neunert, A. Abdolmaleki, M. Wulfmeier, \textit{et al.}, ``Continuous-discrete reinforcement learning for hybrid control in robotics,'' in \emph{Proceedings of the Conference on Robot Learning}, 2020, pp. 735--751.
+
+    \bibitem{fu2024multiagent}
+    H. Fu, K. Tang, P. Li, \textit{et al.}, ``Multi-agent reinforcement learning with hybrid action space for free gait motion planning of hexapod robots,'' in \emph{Proceedings of the Annual Conference on Robot Learning}, 2024.
+
+    % \bibitem{laskin2020curl}
+    % M. Laskin, A. Srinivas, and P. Abbeel, ``Curl: Contrastive unsupervised representations for reinforcement learning,'' in \emph{Proceedings of the International Conference on Machine Learning}, 2020, pp. 5639--5650.
+
+    \bibitem{allshire2021laser}
+    A. Allshire, R. Mart{\'\i}n-Mart{\'\i}n, S. Shawn, \textit{et al.}, ``{{LASER}}: Learning a latent action space for efficient reinforcement learning,'' in \emph{Proceedings of the International Conference on Robotics and Automation}, 2021, pp. 6650--6656.
+
+    \bibitem{zheng2023taco}
+    R. Zheng, X. Wang, Y. Sun, \textit{et al.}, ``\texttt{TACO}: Temporal latent action-driven contrastive loss for visual reinforcement learning,'' \emph{Advances in Neural Information Processing Systems}, vol. 36, pp. 48203--48225, 2023.
+
+    \bibitem{rakelly2021which}
+    K. Rakelly, A. Gupta, C. Florensa, and S. Levine, ``Which mutual-information representation learning objectives are sufficient for control?,'' \emph{Advances in Neural Information Processing Systems}, vol. 34, pp. 26345--26357, 2021.
+
+    \bibitem{skrynnik2024pogema}
+    A. Skrynnik, A. Andreychuk, A. Borzilov, \textit{et al.}, ``{{POGEMA}}: A benchmark platform for cooperative multi-agent pathfinding,'' in \emph{Proceedings of the International Conference on Learning Representations}, 2024.
+
+    \bibitem{skrynnik2024learn}
+    A. Skrynnik, A. Andreychuk, M. Nesterova, \textit{et al.}, ``Learn to follow: Decentralized lifelong multi-agent pathfinding via planning and learning,'' in \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, vol. 38, no. 16, 2024, pp. 17541--17549.
+
+    % \bibitem{hart1968formal}
+    % P. E. Hart, N. J. Nilsson, and B. Raphael, ``A formal basis for the heuristic determination of minimum cost paths,'' \emph{IEEE Transactions on Systems Science and Cybernetics}, vol. 4, no. 2, pp. 100--107, 1968.
+
+    % \bibitem{he2016deep}
+    % K. He, X. Zhang, S. Ren, J. Sun, ``Deep residual learning for image recognition,'' in \emph{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2016, pp. 770--778.
+
+    \bibitem{liu2022light}
+    Q. Liu, Y. Jiang, and X. Ma, ``Light aircraft game: A lightweight, scalable, gym-wrapped aircraft competitive environment with baseline reinforcement learning algorithms,'' 2022, URL https://github.com/liuqh16/CloseAirCombat
+
+    \bibitem{xue2024neuralplane}
+    C. Xue, Q. Liu, \textit{et al.}, ``NeuralPlane: An efficiently parallelizable platform for fixed-wing aircraft control with reinforcement learning,'' \emph{Advances in Neural Information Processing Systems}, vol. 37, pp. 96939--96962.
+    
+    \bibitem{berndt2004jsbsim}
+    J. Berndt, ``{{JSBSim}}: An open source flight dynamics model in {C}++,'' in \emph{Proceedings of the AIAA Modeling and Simulation Technologies Conference and Exhibit}, 2004, pp. 4923.
+
+    \bibitem{pope2022hierarchical}
+    A. P. Pope, J. S. Ide, D. Mićović, \textit{et al.}, ``Hierarchical reinforcement learning for air combat at {DARPA}'s {AlphaDogfight Trials},'' \emph{IEEE Transactions on Artificial Intelligence}, vol. 4, no. 6, pp. 1371--1385, 2022.
+    
+    \bibitem{bae2023deep}
+    J. Bae, H. Jung, S. Kim, \textit{et al.}, ``Deep reinforcement learning-based air-to-air combat maneuver generation in a realistic environment,'' \emph{IEEE Access}, vol. 11, no. 1, pp. 26427--26440, 2023.
+
+    \bibitem{he2023autonomous}
+    H. He, Q. Dong, X. Shang, \textit{et al.}, ``Autonomous decision-making algorithm for multi-agent beyond-visual-range air combat,'' in \emph{Proceedings of the Chinese Conference on Swarm Intelligence and Cooperative Control}, 2023, pp. 646--660.
+
+\end{thebibliography}
+
+% \bibliography{mybib.bib}
+
+\end{document}

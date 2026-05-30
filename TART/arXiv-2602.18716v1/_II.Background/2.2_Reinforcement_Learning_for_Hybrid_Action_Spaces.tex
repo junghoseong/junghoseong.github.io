@@ -1,0 +1,5 @@
+Hybrid action spaces commonly arise in practical domains such as traffic signal control~\cite{luo2024reinforcement}, financial trading~\cite{pan2022learn}, robotics~\cite{neunert2020continuous, fu2024multiagent}, where agents must coordinate discrete and continuous actions.
+This formulation is also natural for resource-control problems, where discrete resource-usage decisions must be integrated with continuous maneuvering.
+These settings have motivated RL methods tailored to hybrid actions, including extensions of Q-learning~\cite{masson2016reinforcement, xiong2018parametrized} and actor-critic approaches~\cite{ hausknecht2015deep, fan2019hybrid}.
+More recently, Li~\textit{et~al}. proposed HyAR~\cite{li2021hyar}, which uses a conditional Variational Autoencoder (cVAE) to embed single-step hybrid actions and reduce redundancy in the enlarged action space.
+However, single-step embeddings cannot capture long-horizon tactical dependencies, motivating temporally grounded action representations that couple discrete resource control with continuous maneuver generation under resource limits.

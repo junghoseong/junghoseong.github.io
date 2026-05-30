@@ -1,0 +1,11 @@
+We validate the design by ablating the contrastive loss $\mathcal{L}_{\text{NCE}}$ and the vector-quantized loss $\mathcal{L}_{\text{VQ}}$.
+The contrastive loss aligns discrete resource usage decisions with the following continuous trajectories.
+The vector-quantized loss induces a codebook supporting diverse maneuver patterns under similar discrete actions and state histories.
+We denote the ablations as TART w/o $\mathcal{L}_{\text{NCE}}$ and TART w/o $\mathcal{L}_{\text{VQ}}$.
+Removing both eliminates the learned representation and conditioning, and the method becomes close to an HPPO~\cite{fan2019hybrid} learner.
+
+In both Maze Navigation and Air-to-Air Combat, ablating either objective reduces \emph{Success Rate}, whereas the full model consistently performs best.
+In \textit{Hard} Maze Navigation, both \textbf{TTG} and \emph{Occupancy Coverage} increase in ablated models, reflecting difficulty with clutter and delayed $\textsc{Penetration}$.
+In Air-to-Air Combat environment, both ablations increase \textbf{TTE} and \textbf{SPE} with identical budgets, indicating degraded launch timing and weaker follow-up maneuvers.
+Variance across seeds is larger for TART w/o $\mathcal{L}_{\text{NCE}}$ than for TART w/o $\mathcal{L}_{\text{VQ}}$, suggesting that multi-modality without contrastive alignment results in unstable learning with mode drift.
+These findings highlight the complementary roles of temporal alignment and maneuver diversity for mastering hybrid actions with limited resources under dynamic conditions.

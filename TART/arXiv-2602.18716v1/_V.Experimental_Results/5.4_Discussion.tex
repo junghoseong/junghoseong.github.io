@@ -1,0 +1,16 @@
+\subsubsection{Maze Navigation}
+Figure~\ref{fig:qual_result}(a) shows agent visitation heatmaps in Maze Navigation across different difficulty levels.
+In \emph{Easy} and \emph{Medium}, the density concentrates near the shortest paths, while retaining some pre-convergence spread, indicating a reliable goal-reaching policy.
+Consistent with corridor geometry, $\textsc{Boost}$ is used early to accelerate along straight segments while staying within the per-episode budget.
+In \emph{Hard}, the agent can encounter deadlocks, which can be resolved by activating the $\textsc{Penetration}$ option at chokepoints.
+Fig.~\ref{fig:qual_result}(b) further illustrates such deadlock cases.
+Overall, the heatmap patterns align with the quantitative metrics, showing that $\textsc{Boost}$ enables faster progress along straight corridors and $\textsc{Penetration}$ resolves blockages under budget constraints.
+
+\subsubsection{Air-to-Air Combat}
+TART exhibits both strong representation ability and adaptive combat behaviors. 
+In Fig.~\ref{fig:main-figure}(a), maneuvers differ with or without missile launch, showing causal dependency between discrete and continuous actions.
+Figure~\ref{fig:main-figure}(b) demonstrates multi-modality, where distinct VQ codes yield different maneuvers under the same conditions.
+Figures~\ref{fig:qual_result}(c)-(d) illustrate adaptive maneuvers in dynamic combat scenarios.
+In (c), the agent executes an offensive maneuver with consecutive $\textsc{Missile}$ actions.
+In (d), it performs a defensive maneuver, neutralizing the opponent's missile with a $\textsc{Defense}$ action and following with a counter shot.
+These results show that integrating TART enables the RL agent to capture causal dependencies and multi-modality while coordinating offensive and defensive options in a context-aware manner.
