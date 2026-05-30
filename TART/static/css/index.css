@@ -49,6 +49,11 @@ body {
 
 .publication-title {
     font-family: 'Google Sans', sans-serif;
+    font-weight: 400;
+}
+
+.publication-title strong {
+    font-weight: 700;
 }
 
 .publication-authors {
