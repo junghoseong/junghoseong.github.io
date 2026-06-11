@@ -107,28 +107,30 @@
         <p class="demo-variant-label">
           <strong>Matched simulation:</strong> choreography aligned with the real-world demonstration above.
         </p>
-        <button class="button is-normal is-rounded is-dark show-demo-video"
+        <button type="button" class="button is-normal is-rounded is-dark show-demo-video"
                 data-video="./simulation_classic_sequence.mp4"
+                data-video-id="classic-matched-video"
                 data-label-show="Show Matched Simulation"
                 data-label-hide="Hide Simulation">
           <span class="icon"><i class="fas fa-play"></i></span>
-          <span>Show Matched Simulation</span>
+          <span class="demo-btn-label">Show Matched Simulation</span>
         </button>
-        <video class="demo-video" hidden controls preload="metadata" playsinline></video>
+        <video id="classic-matched-video" class="demo-video" hidden controls preload="metadata" playsinline></video>
       </div>
 
       <div class="demo-variant">
         <p class="demo-variant-label">
           <strong>Diverse simulation:</strong> alternative primitive assignment under the same music, generated to showcase choreography diversity beyond the real-world sequence.
         </p>
-        <button class="button is-normal is-rounded is-dark show-demo-video"
+        <button type="button" class="button is-normal is-rounded is-dark show-demo-video"
                 data-video="./simulation_classic_sequence_demo_2.mp4"
+                data-video-id="classic-diverse-video"
                 data-label-show="Show Diverse Simulation"
                 data-label-hide="Hide Simulation">
           <span class="icon"><i class="fas fa-play"></i></span>
-          <span>Show Diverse Simulation</span>
+          <span class="demo-btn-label">Show Diverse Simulation</span>
         </button>
-        <video class="demo-video" hidden controls preload="metadata" playsinline></video>
+        <video id="classic-diverse-video" class="demo-video" hidden controls preload="metadata" playsinline></video>
       </div>
     </div>
 
@@ -141,14 +143,15 @@
         <source src="./Still%20D.R.E.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
-      <button class="button is-normal is-rounded is-dark show-demo-video"
+      <button type="button" class="button is-normal is-rounded is-dark show-demo-video"
               data-video="./simulation_silldre_demo.mp4"
+              data-video-id="stilldre-video"
               data-label-show="Show Simulation"
               data-label-hide="Hide Simulation">
         <span class="icon"><i class="fas fa-play"></i></span>
-        <span>Show Simulation</span>
+        <span class="demo-btn-label">Show Simulation</span>
       </button>
-      <video class="demo-video" hidden controls preload="metadata" playsinline></video>
+      <video id="stilldre-video" class="demo-video" hidden controls preload="metadata" playsinline></video>
     </div>
   </div>
 </section>
@@ -200,41 +203,69 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.show-demo-video').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var block = btn.closest('.demo-block');
-      var video = btn.nextElementSibling;
-      var label = btn.querySelector('span:last-child');
+  document.addEventListener('DOMContentLoaded', function () {
+    function resetDemoButton(btn) {
+      var label = btn.querySelector('.demo-btn-label');
       var icon = btn.querySelector('.icon i');
-      var showLabel = btn.dataset.labelShow || 'Show Simulation';
-      var hideLabel = btn.dataset.labelHide || 'Hide Simulation';
-
-      if (video.hasAttribute('hidden')) {
-        block.querySelectorAll('.demo-video').forEach(function (other) {
-          if (other !== video) {
-            other.pause();
-            other.setAttribute('hidden', '');
-          }
-        });
-        block.querySelectorAll('.show-demo-video').forEach(function (otherBtn) {
-          if (otherBtn !== btn) {
-            otherBtn.querySelector('span:last-child').textContent =
-              otherBtn.dataset.labelShow || 'Show Simulation';
-            otherBtn.querySelector('.icon i').className = 'fas fa-play';
-          }
-        });
-        video.src = btn.dataset.video;
-        video.removeAttribute('hidden');
-        video.play();
-        label.textContent = hideLabel;
-        icon.className = 'fas fa-eye-slash';
-        video.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        video.pause();
-        video.setAttribute('hidden', '');
-        label.textContent = showLabel;
+      if (label) {
+        label.textContent = btn.dataset.labelShow || 'Show Simulation';
+      }
+      if (icon) {
         icon.className = 'fas fa-play';
       }
+    }
+
+    document.querySelectorAll('.show-demo-video').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var block = btn.closest('.demo-block');
+        var video = document.getElementById(btn.dataset.videoId);
+        var label = btn.querySelector('.demo-btn-label');
+        var icon = btn.querySelector('.icon i');
+        var showLabel = btn.dataset.labelShow || 'Show Simulation';
+        var hideLabel = btn.dataset.labelHide || 'Hide Simulation';
+
+        if (!video) {
+          return;
+        }
+
+        if (video.hasAttribute('hidden')) {
+          block.querySelectorAll('.demo-video').forEach(function (other) {
+            if (other !== video) {
+              other.pause();
+              other.setAttribute('hidden', '');
+            }
+          });
+          block.querySelectorAll('.show-demo-video').forEach(function (otherBtn) {
+            if (otherBtn !== btn) {
+              resetDemoButton(otherBtn);
+            }
+          });
+
+          video.src = btn.dataset.video;
+          video.load();
+          video.removeAttribute('hidden');
+          var playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(function () {});
+          }
+          if (label) {
+            label.textContent = hideLabel;
+          }
+          if (icon) {
+            icon.className = 'fas fa-eye-slash';
+          }
+          video.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          video.pause();
+          video.setAttribute('hidden', '');
+          if (label) {
+            label.textContent = showLabel;
+          }
+          if (icon) {
+            icon.className = 'fas fa-play';
+          }
+        }
+      });
     });
   });
 </script>
