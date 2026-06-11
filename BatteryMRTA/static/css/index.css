@@ -1,0 +1,300 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+    font-weight: 400;
+}
+
+.publication-title strong {
+    font-weight: 700;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+.section-alt {
+  background-color: #f8fafc;
+}
+
+.experiments-block {
+  margin-bottom: 3rem;
+}
+
+.experiments-intro {
+  max-width: 900px;
+  margin: 0.5rem auto 1.5rem;
+  text-align: center;
+  color: #475569;
+}
+
+.experiments-tabs.pill-tabs ul {
+  border: none;
+  gap: 0.5rem;
+}
+
+.experiments-tabs.pill-tabs li a {
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #334155;
+}
+
+.experiments-tabs.pill-tabs li.is-active a {
+  background: #363636;
+  border-color: #363636;
+  color: #fff;
+}
+
+.experiments-panel {
+  display: none;
+}
+
+.experiments-panel.is-active {
+  display: block;
+}
+
+.result-table-wrapper {
+  overflow-x: auto;
+  margin: 0 auto;
+}
+
+.result-table {
+  font-size: 0.85rem;
+  margin: 0 auto;
+}
+
+.result-table th {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.result-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.result-table td:first-child,
+.result-table th:first-child {
+  text-align: left;
+}
+
+.publication-venue-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.section-figure {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.demo-block {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.demo-block .demo-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.demo-block .demo-credit {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-block .demo-variant {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.demo-block .demo-variant-label {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.demo-block audio {
+  display: block;
+  width: 100%;
+  margin: 0 auto 1rem;
+}
+
+.demo-block .demo-video {
+  display: block;
+  width: 100%;
+  margin: 1.25rem auto 0;
+  border-radius: 8px;
+}
+
+.demo-block .demo-video[hidden] {
+  display: none;
+}
