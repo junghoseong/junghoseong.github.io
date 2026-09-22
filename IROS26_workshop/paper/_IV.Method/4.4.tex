@@ -1,0 +1,120 @@
+We represent simultaneous encounters through a local active conflict graph. 
+For each sensing edge $\{i,j\}\in\mathcal E_N(t)$, define the nominal pairwise CBF margin
+\begin{equation}
+    \sigma_{ij}^{\mathrm{nom}}=
+    L_{f_{ij}}h_{ij}+
+    L_{g_i}h_{ij}u_i^{\mathrm{nom}}+
+    L_{g_j}h_{ij}u_j^{\mathrm{nom}}+
+    \alpha_c(h_{ij}).
+    \label{eq:nominal_pairwise_margin}
+\end{equation}
+An edge becomes active when $\sigma_{ij}^{\mathrm{nom}}\leq\eta_{\mathrm{on}}$ and remains active until $\sigma_{ij}^{\mathrm{nom}}\geq\eta_{\mathrm{off}}$, where $0\leq\eta_{\mathrm{on}}<\eta_{\mathrm{off}}$.
+The resulting active graph is denoted by $\mathcal G_a(t)=(\mathcal A,\mathcal E_a(t))$.
+
+When robot $i$ first becomes incident to an active edge, it freezes the node-wise precedence key
+\begin{equation}
+    \kappa_i=(\bar\mu_i,-i),
+    \label{eq:precedence_key}
+\end{equation}
+where $\bar\mu_i$ is its current energy margin and the robot identifier provides deterministic tie-breaking.
+The same key is used for all active neighbors until robot $i$ has no remaining active edge.
+Each edge is directed from the robot with the larger key toward the robot with the smaller key, where the edge direction denotes yielding.
+Because all edges follow the same strict total ordering, the directed active graph is acyclic.
+
+Precedence also selects the reference input of the safety filter:
+\begin{equation}
+    u_i^{\mathrm{ref}}
+    =
+    \begin{cases}
+        u_i^{\mathrm{nom}},
+        & \text{if robot $i$ has no outgoing edge},\\
+        u_i^{\mathrm{yield}},
+        & \text{otherwise}.
+    \end{cases}
+    \label{eq:precedence_reference}
+\end{equation}
+Here, $u_i^{\mathrm{yield}}$ directs the robot toward a locally available holding region outside the conflict zone.
+
+For an active pair, let $y_{ij}$ and $r_{ij}$ denote the yielding and right-of-way robots, respectively, and define
+\begin{equation}
+    a_{ij}^{s}(u_s)=
+    L_{g_s}h_{ij}u_s+
+    \frac{1}{2}
+    \left(
+        L_{f_{ij}}h_{ij}
+        +
+        \alpha_c(h_{ij})
+    \right),
+    \; s\in\{i,j\}.
+    \label{eq:local_pairwise_contribution}
+\end{equation}
+The responsibility transfer is
+\begin{equation}
+\begin{aligned}
+    \rho_{ij}
+    =
+    \min\left\{
+        \left[-a_{ij}^{r_{ij}}
+        (u_{r_{ij}}^{\mathrm{ref}})\right]_+,\,
+        \left[\max_{u\in\mathcal U}
+        a_{ij}^{y_{ij}}(u)\right]_+
+    \right\},
+\end{aligned}
+\label{eq:responsibility_transfer}
+\end{equation}
+and the complementary allocations are
+\begin{equation}
+    \gamma_{y_{ij}r_{ij}}=-\rho_{ij},
+    \qquad
+    \gamma_{r_{ij}y_{ij}}=\rho_{ij}.
+    \label{eq:complementary_responsibility}
+\end{equation}
+For inactive pairs, $\gamma_{ij}=0$.
+
+Robot $i$ then solves
+\begin{equation}
+\begin{aligned}
+    u_i^\star
+    =
+    \arg&\min_{u_i\in\mathcal U}
+    \quad
+    \|u_i-u_i^{\mathrm{ref}}\|^2\\
+    \mathrm{s.t.}\quad&
+    L_{g_i}h_{ij}u_i
+    +
+    \frac{1}{2}
+    \left(
+        L_{f_{ij}}h_{ij}
+        +
+        \alpha_c(h_{ij})
+    \right)
+    +
+    \gamma_{ij}
+    \geq0,\\
+    &
+    L_{f_i}h_{i,o}^{\mathrm{obs}}
+    +
+    L_{g_i}h_{i,o}^{\mathrm{obs}}u_i
+    \geq
+    -\alpha_o(h_{i,o}^{\mathrm{obs}}),
+    \quad \forall o\in\mathcal O_i,\\
+    &
+    L_{F_i}h_{e,i}
+    +
+    L_{G_i}h_{e,i}u_i
+    \geq
+    -\alpha_e(h_{e,i}).
+    \label{eq:distributed_safety_filter}
+\end{aligned}
+\end{equation}
+
+\begin{proposition}[Local precedence consistency and safety]
+Suppose that neighboring robots maintain consistent node-wise keys, the local QPs remain feasible, and discrete certificate updates preserve $h_{e,i}\geq0$.
+Then the directed active graph is acyclic, the filtered inputs satisfy the centralized pairwise collision-avoidance condition, and the proxy energy-sufficiency sets are preserved between certificate updates.
+When the calibrated station-cost event holds, the station-arrival voltage is no lower than $V_{\min}$.
+\end{proposition}
+
+Acyclicity follows from the strict ordering of the node-wise keys.
+Moreover, $\gamma_{ij}+\gamma_{ji}=0$, so summing the paired local constraints recovers the centralized pairwise CBF condition.
+The acyclic ordering prevents cyclic precedence among locally observed robots but does not guarantee global deadlock freedom.
+Progress additionally requires a feasible local holding region and feasibility of the combined CBF constraints.

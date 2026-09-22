@@ -1,0 +1,24 @@
+A battery only discharges under any admissible input.
+The set of sufficient energy states therefore cannot be held invariant by control alone, and sufficiency is meaningful only relative to reaching a charging station.
+Persistification frameworks certify this property with a CBF~\cite{notomista2018persistification, notomista2020persistification}.
+Each robot's state is augmented with its battery level, and the controller keeps the robot inside the set from which a charger remains reachable on the remaining charge.
+Extensions coordinate shared stations across a team~\cite{fouad2022energy}.
+In all of these, the certificate serves one robot and one purpose, and its margin is discarded once sufficiency is established.
+\textit{We reinterpret this margin as the energy a robot can spare and elevate it to the precedence cue that coordinates the team.}
+
+The barriers of Section~\ref{sec:2.A} certify specifications that a controller can actively maintain. 
+Energy sufficiency is not such a specification. 
+Under any admissible input the battery strictly discharges, so the set $\{e\geq e_{\min}\}$ admits no control that holds it invariant, and the presumption behind Eq.~\eqref{eq:cbf_condition} fails.
+Sufficiency acquires meaning only in relation to a charging station: a robot is sufficiently charged not when its level is high, but when what it retains still covers the cost of reaching a station.
+
+Persistification frameworks make this precise by certifying reachability rather than level~\cite{notomista2018persistification, notomista2020persistification}.
+The state is augmented with the battery level, and the invariant set is not $\{e\geq e_{\min}\}$ but the set of augmented states from which a station remains reachable on the charge in hand. 
+A robot approaching depletion is turned back before its remaining charge falls below the return cost, and this turning-back is exactly a control that keeps the augmented state inside the reachable set. 
+Forward invariance is thereby restored on the correct set, and a CBF certifies it in the standard form. 
+Subsequent work extends the certificate to teams sharing a limited set of stations~\cite{fouad2022energy}.
+
+Across these frameworks the energy certificate is single-purpose.
+Its margin, the charge a robot holds beyond the return cost, is read only to confirm that sufficiency is met, and is discarded once the constraint is satisfied.
+We retain this margin and read it as a measure of how much a robot can spare. 
+A robot with a large margin can absorb a detour that a robot near its return cost cannot, so the margin ranks two robots by their capacity to yield. 
+This reinterpretation turns a per-robot feasibility certificate into the pairwise signal that Section~\ref{sec:2.B} left unspecified: an allocation that is neither learned from demonstrations nor assigned by a designer, but computed onboard from the energy state itself.

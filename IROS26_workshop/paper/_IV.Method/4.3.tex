@@ -1,0 +1,79 @@
+To enforce this discrete precedence order at the continuous control level, we embed it into a responsibility-aware control barrier function (CBF)~\cite{cosner2023learning}. 
+We define a directional indicator $\psi_{ij} \in \{-1, 1\}$ based on the yielding order and allocate an asymmetric avoidance responsibility $\gamma_{ij} = \rho \psi_{ij}$.
+The yielding agent takes on a tighter constraint within the local quadratic program (QP):
+\begin{equation}
+    L_{g_i}h_{ij}u_i + \frac{1}{2}(L_{f_{ij}}h_{ij} + \alpha(h_{ij})) - \gamma_{ij} \ge 0.
+\end{equation} 
+By exchanging only the scalar $\mu_i$, agents dynamically reallocate avoidance efforts without sharing future trajectories, strictly preserving pairwise collision avoidance. 
+
+% The energy quantities in Sec.~\ref{sec:4.B} determine the discrete precedence, while the continuous control layer enforces the associated pairwise collision-avoidance constraints.
+% For an interacting pair $(i,j)$, define the collision-avoidance barrier
+% \begin{equation}
+%     h_{ij}(x_i,x_j):=\|p_i-p_j\|^2-d_{\min}^2,
+%     \label{eq:collision_barrier}
+% \end{equation}
+% where $d_{\min}>0$ is the required separation distance.
+% Assuming relative degree one, the shared CBF condition is
+% \begin{equation}
+%     L_{f_{ij}}h_{ij}
+%     +
+%     L_{g_i}h_{ij}u_i
+%     +
+%     L_{g_j}h_{ij}u_j
+%     +
+%     \alpha_c(h_{ij})
+%     \geq0.
+%     \label{eq:shared_collision_cbf}
+% \end{equation}
+% We encode the precedence in Eq.~\eqref{eq:energy_precedence} through the directional variable
+% \begin{equation}
+%     \psi_{ij}
+%     :=
+%     \begin{cases}
+%         1, & i\rightarrow j,\\
+%         -1, & j\rightarrow i,
+%     \end{cases}
+%     \qquad
+%     \psi_{ji}=-\psi_{ij}.
+%     \label{eq:precedence_direction}
+% \end{equation}
+% Let $\rho_{ij}=\rho_{ji}>0$ denote the responsibility magnitude and set
+% \begin{equation}
+%     \gamma_{ij}:=\rho_{ij}\psi_{ij},
+%     \qquad
+%     \gamma_{ji}:=-\gamma_{ij}.
+%     \label{eq:complementary_responsibility_terms}
+% \end{equation}
+% Because the local constraint contains $-\gamma_{ij}$, the yielding robot receives the tighter constraint and hence greater collision-avoidance responsibility.
+
+% Let $\mathcal{N}_i^{\mathrm{act}}$ denote the robots currently interacting with robot $i$.
+% Robot $i$ computes its control input from
+% \begin{equation}
+% \begin{aligned}
+%     u_i^\star:=
+%     \arg&\min_{u_i\in\mathcal U_i}\quad
+%     \frac{1}{2}
+%     \|u_i-u_i^{\mathrm{nom}}\|_{W_i}^{2}\\
+%     \mathrm{s.t.}&\quad
+%     L_{g_i}h_{ij}u_i
+%     +
+%     \frac{1}{2}
+%     \left(
+%         L_{f_{ij}}h_{ij}
+%         +
+%         \alpha_c(h_{ij})
+%     \right)
+%     -
+%     \gamma_{ij}
+%     \geq0,\\
+%     &\hspace{52.5mm}
+%     \forall j\in\mathcal N_i^{\mathrm{act}},
+% \end{aligned}
+% \label{eq:local_precedence_qp}
+% \end{equation}
+% where $u_i^{\mathrm{nom}}$ is the task-level reference input and $W_i\succ0$.
+% For each pair $(i,j)$, summing the two local constraints and using $\gamma_{ij}+\gamma_{ji}=0$ recovers the standard pairwise CBF condition.
+% Thus, the allocation changes which robot contributes more to collision avoidance without changing the underlying safety requirement.
+% Each robot simultaneously enforces all active pairwise constraints in Eq.~\eqref{eq:local_precedence_qp}.
+% Under standard CBF regularity and QP-feasibility conditions, the collision-free sets are forward invariant.
+% The resulting controller therefore satisfies the safety-preserving precedence-integration requirement of Problem~\ref{prob:main}.

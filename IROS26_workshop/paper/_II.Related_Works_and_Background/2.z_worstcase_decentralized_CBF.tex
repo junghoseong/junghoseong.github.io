@@ -1,0 +1,27 @@
+We now consider a team of $N$ robots.
+Robot $i$ has state $x_i$, position $p_i=\Pi x_i\in\mathbb{R}^3$, and occupies a ball of radius $r$.
+Pairwise collision avoidance between robots $i$ and $j$ is encoded by
+\begin{equation}
+    h_{ij}(x_i, x_j) = \|p_i - p_j \|^2 - (2r)^2.
+    \label{eq:pairwise_barrier}
+\end{equation}
+We assume that $h_{ij}$ has relative degree one with respect to the control inputs. 
+Higher-relative-degree dynamics can instead be handled using a high-order CBF construction. 
+The corresponding joint CBF condition is
+\begin{equation}
+    L_{f_i} h_{ij} + L_{f_j}h_{ij} +
+    L_{g_i} h_{ij}u_i + L_{g_j} h_{ij}u_j
+    \geq -\alpha (h_{ij}).
+\label{eq:centralized_CBF_cond}
+\end{equation}
+Because Eq.~\eqref{eq:centralized_CBF_cond} couples the two control inputs, a direct implementation jointly optimizes the stacked inputs of the robots and therefore requires coordination across the team.~\cite{wang2017safety}.
+
+A fully unilateral alternative is to require robot $i$ to remain safe against every admissible input of robot $j$:
+\begin{equation}
+    \inf_{u_j\in\mathcal{U}_j} 
+    \Big[ L_{f_i} h_{ij} + L_{f_j} h_{ij} + 
+    L_{g_i} h_{ij} u_i + L_{g_j}h_{ij}u_j \Big] \geq -\alpha(h_{ij}).
+    \label{eq:worst_case_CBF_cond}
+\end{equation}
+This condition provides safety independently of the neighbor's realized input, but is conservative because it neglects the neighbor's contribution and provides no mechanism for deciding which robot should yield. 
+The next section addresses this limitation by distributing the shared avoidance responsibility asymmetrically.

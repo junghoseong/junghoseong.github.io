@@ -1,0 +1,171 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+
+
+\IEEEoverridecommandlockouts                           
+\overrideIEEEmargins    
+
+\usepackage{times}
+% numbers option provides compact numerical references in the text. 
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{caption}
+% \usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{romannum}
+\usepackage{amsmath,amssymb}
+% \usepackage{amsmath}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{amsthm}
+\newtheorem{assumption}{Assumption}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+\newcommand{\Tref}[1]{Table~\ref{#1}}
+\newcommand{\Eref}[1]{Eq.~(\ref{#1})}
+% \newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{arydshln}
+% \newcommand{\cmark}{\ding{51}}%
+% \newcommand{\xmark}{\ding{55}}%
+\usepackage{tabularx}
+    % \newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\let\OldStatex\Statex
+\renewcommand{\Statex}[1][3]{%
+  \setlength\@tempdima{\algorithmicindent}%
+  \OldStatex\hskip\dimexpr#1\@tempdima\relax}
+\renewcommand{\ALG@beginalgorithmic}{\normalsize}
+
+\renewcommand{\labelenumi}{\roman{enumi})}
+\newcommand{\fu}{\frac{\partial \vf}{\partial \vu}}
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\Pas}[2]{\mathcal{P}\left({#1}|{#2}\right)}
+\newcommand{\Pol}[2]{\mathcal{U}\left({#1}|{#2}\right)}
+\newcommand{\PolOpt}[2]{\mathcal{U}^{*}\left({#1}|{#2}\right)}
+\newcommand{\PolPasT}[1]{\mathcal{P}\left({#1}\right)}
+\newcommand{\PolT}[1]{\mathcal{U}\left({#1}\right)}
+\newcommand{\traj}{\mathbf{X}}
+\newcommand{\KL}[2]{\mathbb{D}_{\mathrm{KL}}\left({#1}\parallel {#2}\right)}
+\newcommand{\costt}[1]{\mathcal{J}\left({#1}\right)}
+\newcommand{\logb}[1]{\log\left({#1}\right)}
+\newcommand{\expb}[1]{\exp\left({#1}\right)}
+\newcommand{\val}[2]{\mathit{V}_{#2}\left({#1}\right)}
+\newcommand{\zt}[2]{\Phi_{#2}\left({#1}\right)}
+\newcommand{\nZ}[2]{\mathcal{G}_t[\Phi]\left({#1}\right)}
+\newcommand{\ExP}[2]{\E_{{#1}}{\left[#2\right]}}
+\newcommand{\vnu}{{\bf \nu}}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\DeclareCaptionFont{mysize}{\fontsize{8}{9.6}\selectfont}
+\captionsetup{font=mysize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\LARGE \bf Energy-Guided Priority under Battery Uncertainty \\ for Multi-Robot Coordination}
+
+% \author{Anonymous Authors}
+\author{Hoseong Jung, Sungil Son, Inkyu Jang, H. Jin Kim, Jungwon Park$^{*}$
+% \thanks{This work was supported by Institute of Information \& communications Technology Planning \& Evaluation (IITP) grant funded by the Korean Government (MIST)}
+\thanks{Hoseong Jung, Sungil Son, and H. Jin Kim are with Seoul National University, South Korea
+        {\tt\footnotesize \{ghtjdaleka, aldridge99, hjinkim\}@snu.ac.kr}.}       
+\thanks{Inkyu Jang is with the University of California, Berkeley, USA {\tt\footnotesize janginkyu.larr@gmail.com}.}
+\thanks{Jungwon Park is with Seoul National University of Science and Technology, South Korea {\tt\footnotesize jungwonpark@seoultech.ac.kr}.}
+\thanks{$^*$Corresponding author}}%
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+As multi-agent systems transition from structured environments to unpredictable domains, communication constraints and energy autonomy become critical operational bottlenecks.
+Furthermore, heterogeneous usage introduces battery uncertainty across identical hardware, complicating reliable planning.
+To address these challenges, we explicitly calibrate this usage-induced uncertainty to enable a highly scalable, low-bandwidth coordination strategy.
+We explore right-of-way coordination as a downstream task, where exchanging the energy sufficiency margin serves as a precedence cue during close encounters.
+Specifically, future energy needs are estimated via a cell-specific proxy model, with prediction errors rigorously calibrated using adaptive conformal inference.
+These calibrated margins dictate a unique yielding order, embedded into a responsibility-aware control barrier function (CBF) to enforce asymmetric collision avoidance.
+While validations show this precedence cue maintains safety with slight energy efficiency gains during local encounters, the calibrated framework is ultimately more suited for comprehensive mission planning to achieve true long-term autonomy in the wild.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}\label{sec:intro}
+\input{_I.Introduction/1.1_Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Background and Related Works}\label{sec:rel_works}
+% \subsection{Control Barrier Functions and Responsibility Allocation}\label{sec:2.A}
+% \input{_II.Related_Works_and_Background/2.1_CBFs}
+% \subsection{Energy Sufficiency for Persistent Robot Operation}\label{sec:2.B}
+% \input{_II.Related_Works_and_Background/2.2_Energy}
+% \subsection{Adaptive Conformal Inference}\label{sec:2.C}
+% \input{_II.Related_Works_and_Background/2.3_Conformal_Prediction}
+
+\section{Problem Formulation}\label{sec:problem_formulation}
+\input{_III.Problem_Formulation/3.0_Overview}
+\subsection{Motion and Energy Dynamics}\label{sec:3.A}
+\input{_III.Problem_Formulation/3.1_Model}
+\subsection{Problem Statement}\label{sec:3.B}
+\input{_III.Problem_Formulation/3.2_Problem}
+\section{Method}
+\input{_IV.Method/4.0_Overview}
+\subsection{Uncertainty-Calibrated Precedence Cue}\label{sec:4.A}
+\input{_IV.Method/4.1}
+% \subsection{Energy Sufficiency and Precedence}\label{sec:4.B}
+% \input{_IV.Method/4.2}
+\subsection{Safety-Preserving Precedence Integration}\label{sec:4.C}
+\input{_IV.Method/4.3}
+\section{Experiments}
+\input{_V.Experiments/5.0}
+\subsection{Real-World Battery Calibration}\label{sec:5.A}
+\input{_V.Experiments/5.1}
+\subsection{Hardware Validation of Energy-Guided Precedence}\label{sec:5.B}
+\input{_V.Experiments/5.2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CONCLUSION}
+\input{_VI.Conclusion/6.1_Conclusion}
+\addtolength{\textheight}{0cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+
+\bibliographystyle{IEEEtran}
+\bibliographystyle{plainnat}
+
+\bibliography{mybib.bib}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=\columnwidth]{Figures/fig4.pdf}
+\caption{Hardware validation in an 8-agent congested intersection. \textbf{(Left)} Agents move to opposite positions, creating spatial conflicts. The red agent possesses a higher energy-guided priority than the yellow agent. \textbf{(Right)} Enforcing the calibrated precedence cue, the yellow agent actively yields, allowing the red agent to safely maintain its direct path.
+}
+\vspace{-10pt}
+\label{fig:fig4}
+\end{figure}
+
+\end{document}

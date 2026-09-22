@@ -1,0 +1,31 @@
+Conformal prediction constructs prediction sets by calibrating a scalar measure of discrepancy between predictions and observations~\cite{shafer2008tutorial}.
+This quantity is referred to as a nonconformity score.
+Let $\widehat{y}_t$ denote a point prediction of an outcome $y_t$, and define
+\begin{equation}
+    s_t=S(y_t, \widehat{y}_t),
+\end{equation}
+where $S$ is an application-dependent score function.
+Let $q_t(\beta)$ denote the empirical $(1-\beta)$-quantile of the previously observed scores with the standard finite-sample correction.
+The corresponding prediction set is
+\begin{equation}
+    \mathcal{C}_t(\beta)=\{
+    y:S(y, \widehat{y}_t)\leq q_t(\beta) \}.
+    \label{eq:conformal_set}
+\end{equation}
+Under exchangeability of the calibration and test scores, $\mathcal{C}_t(\beta)$ provides marginal coverage of at least $1-\beta$.
+
+In sequential robotic operation, the score distribution may vary over time and exhibit temporal dependence.
+Adaptive conformal inference adjusts the effective miscoverage level using observed violations~\cite{gibbs2021adaptive}.
+Let $e_t=\mathbbm{1}\{y_t\notin\mathcal{C}_t(\beta_t)\}$ denote a prediction-set violation.
+For a target violation level $\delta$, the adaptive update is
+\begin{equation}
+    \beta_{t+1} = \beta_t + \eta(\delta-e_t),
+    \label{eq:adaptive_conformal_update}
+\end{equation}
+where $\eta>0$ is the adaptation rate.
+A violation decreases $\delta_t$ and enlarges subsequent prediction sets, whereas repeated coverage permits tighter sets.
+This feedback controls the long-run empirical violation frequency rather than guaranteeing coverage for every individual prediction.
+
+Adaptive conformal methods have been applied to motion planning and safety-critical control to calibrate trajectory-prediction and safety-assessment errors online~\cite{zhou2024safety, huriot2026safe}.
+In~this work, we use the upper-tail prediction error of a future energy requirement as the score.
+Its calibrated quantile yields a one-sided upper bound used to define the energy-sufficiency certificate and precedence margin.

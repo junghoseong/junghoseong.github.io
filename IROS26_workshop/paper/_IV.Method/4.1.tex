@@ -1,0 +1,66 @@
+To establish a low-bandwidth yielding order, we define the energy sufficiency margin $\mu_i$ as the calibrated estimate of remaining energy after task completion. 
+Let $c_l$ denote the true future energy cost and $\hat{c}_l$ be the prediction from a cell-specific proxy model. 
+To handle usage-induced battery uncertainty, we calibrate the residual error $s_l = c_l - \hat{c}_l$ using adaptive conformal inference~\cite{gibbs2021adaptive}. 
+Specifically, the adaptive quantile $q_l(\beta_l)$ is computed as the empirical $(1-\beta_l)$-quantile of the previously observed calibration scores.
+This feedback mechanism dynamically adjusts the effective miscoverage level: a bound violation decreases $\beta$ to enlarge subsequent prediction bounds, whereas repeated coverage permits tighter margins.
+Consequently, the online update maintains a target violation rate $\delta$ even under distribution shifts caused by cell degradation:
+\begin{equation}
+    \beta_{l+1} = \beta_l + \eta(\delta - \mathbbm{1}\{c_l > \hat{c}_l + q_l(\beta_l)\}).
+\end{equation}
+The resulting calibrated task-cost bound $\overline{c}_i^{task}$ defines the precedence margin:
+\begin{equation}
+    \mu_i = V_i - V_{min} - \overline{c}_i^{task},
+\end{equation}
+where $V_i$ is the current voltage and $V_{min}$ is the minimum operational threshold. 
+For any interacting pair $(i, j)$, the agent with the larger margin has greater flexibility and is assigned to yield (i.e., $\mu_i > \mu_j \implies i \text{ yields to } j$). 
+% Let $\tau\in\mathcal{T}:=\{\mathrm{sta},\mathrm{task}\}$ denote the trajectory type.
+% For robot $i$ and station $c_k$, let $\xi_{i,k}^{\tau}$ denote the planned trajectory reaching $c_k$ directly when $\tau=\mathrm{sta}$, or after task completion when $\tau=\mathrm{task}$.
+% The battery-specific proxy model
+% \begin{equation}
+%     \dot{\widehat V}_i=
+%     \widehat f_{V,i}(z_i;\theta_i)
+%     +\widehat g_{V,i}(z_i;\theta_i)^\top u_i
+%     \label{eq:proxy_voltage_model}
+% \end{equation}
+% predicts the voltage evolution along $\xi_{i,k}^{\tau}$, where $\theta_i$ contains robot-specific model parameters.
+% The resulting point estimate of the future voltage cost is
+% \begin{equation}
+%     \widehat c_{i,k}^{\tau}
+%     :=V_i-\widehat V_{i,k}^{\tau}(H_{i,k}^{\tau}),
+%     \label{eq:predicted_voltage_cost}
+% \end{equation}
+% where $H_{i,k}^{\tau}$ is the trajectory horizon.
+
+% We calibrate the residual proxy-model error separately for each robot and trajectory type.
+% For clarity, these indices are omitted below.
+% Let $\ell$ index completed trajectories, and define the upper-tail score
+% \begin{equation}
+%     s_\ell:=c_\ell-\widehat c_\ell.
+%     \label{eq:energy_nonconformity_score}
+% \end{equation}
+% Let $q_\ell(\beta)$ denote the finite-sample-corrected empirical $(1-\beta)$-quantile of the previously observed scores.
+% For a prediction issued at calibration round $\ell$, the calibrated one-sided upper prediction bound is
+% \begin{equation}
+%     \overline c_{i,k}^{\tau}
+%     :=\widehat c_{i,k}^{\tau}
+%     +q_\ell(\beta_\ell).
+%     \label{eq:calibrated_energy_bound}
+% \end{equation}
+% After the realized cost becomes available, define
+% \begin{equation}
+%     e_\ell:=\mathbbm{1}\{c_\ell>\overline c_\ell\},
+%     \;
+%     \beta_{\ell+1}:=\beta_\ell+\eta(\delta-e_\ell),
+%     \label{eq:energy_aci_update}
+% \end{equation}
+% where $\delta$ is the target violation level and $\eta>0$ is the adaptation rate.
+% A bound violation decreases $\beta_\ell$ and increases the subsequent quantile, whereas repeated coverage permits tighter bounds.
+% Summing the update gives
+% \begin{equation}
+%     \frac{1}{L}\sum_{\ell=1}^{L}e_\ell-\delta
+%     =\frac{\beta_1-\beta_{L+1}}{\eta L}.
+%     \label{eq:aci_violation_identity}
+% \end{equation}
+% Thus, if the adaptive levels remain bounded, the empirical violation frequency converges to the prescribed level $\delta$.
+% Consequently, the calibrated bounds in Eq.~\eqref{eq:calibrated_energy_bound} satisfy the uncertainty-calibrated energy-bound requirement of Problem~\ref{prob:main}.
+% These bounds are used next to construct the energy-sufficiency certificate and precedence margin.

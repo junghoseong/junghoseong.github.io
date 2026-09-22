@@ -1,0 +1,36 @@
+The energy certificate developed in Section~\ref{sec:4.A} rests on a prediction of remaining voltage, whose error the online calibration keeps within an interval.
+We assume the interval exists and defer its construction to Section~\ref{sec:4.A}.
+
+\begin{assumption}[Calibrated proxy] \label{as:proxy}
+The proxy's per-step prediction error is calibrated online: for the residual $s_t$ of Eq.~\eqref{eq:residual} between predicted and realized voltage drop over an interval $\Delta t$, adaptive conformal inference returns a half-width $q_t$ whose long-run exceedance frequency $\lim_{T\to\infty} \frac{1}{T} \sum_{t=1}^{T} \mathbb{1}[s_t > q_t]$ equals $\delta$. 
+The proxy error is homogeneous across the admissible input set, so a half-width calibrated on realized inputs bounds the error of the nominal-policy prediction used in $\hat{c}_\theta$ and $\hat c_\theta^{g_i}$.
+\end{assumption}
+
+\begin{assumption}[External goal allocation] \label{as:allocator}
+Each robot is assigned a goal $p_i^g$, either a task location or a station in $\mathcal{C}$, by an external allocator treated as a black box. 
+Goals are pairwise non-conflicting, $\|p_i^g - p_j^g\| > 2r$, and every assignment is individually survivable: under the calibrated proxy, robot $i$ can reach $p_i^g$ and thereafter a station with voltage no less than $V_{\min} + \varepsilon_i$; otherwise it is redirected to a station. 
+The allocator certifies only this per-robot feasibility. 
+It does not compare robots, and the relative ranking that governs yielding is formed at runtime in Section~\ref{sec:4.B}.
+\end{assumption}
+
+\begin{assumption}[Feasible initial conditions]\label{as:init}
+At $t=0$, the robots are mutually safe, $\|p_i(0) - p_j(0)\| > 2r$ and $\mathrm{dist}(p_i(0), \mathcal{O}) > r$, and each can reach some station with margin $V_{\min} + \varepsilon_i$ under the calibrated proxy.
+\end{assumption}
+
+\begin{problem}[Cooperative Safe Control with Energy-Guided Precedence]\label{prob:main}
+We seek a distributed policy $u_i=\pi_i\big(z_i, \{z_j\}_{j\in\mathcal{N}_i}, p_i^g\big)$ under which the closed-loop trajectories of Eq.~\eqref{eq:augmented_dynamics}, with resets, satisfy the following for every robot $i$ and all $t \geq 0$:
+\begin{enumerate}
+    \item \textit{Collision safety:} $\|p_i(t) - p_j(t)\| \geq 2r$ for all $j\neq i$, and $\mathrm{dist}(p_i(t), \mathcal{O})\ge r$.
+    \item \textit{Energy sufficiency:} robot $i$ retains enough voltage to reach a station at all times, certified through the reachability set of Section~\ref{sec:4.A} rather than through $\{V_i \geq V_{\min}\}$, despite the uncertainty in $\theta$.
+    \item \textit{Liveness:} $\inf_{t\geq 0} \|p_i(t) - p_i^g
+    \|=0$, i.e., each robot eventually reaches its assigned goal.
+\end{enumerate}
+\end{problem}
+
+Collision safety (i) is enforced unconditionally.
+Energy sufficiency (ii) holds throughout the mission and the subsequent return, so a robot that has completed its task is still certified to reach a station. 
+Among policies meeting (i)–(iii), we prefer those that yield according to energy.
+When two robots must give way, the one with less voltage to spare deviates less, and its neighbor absorbs the effort. 
+This yielding is a preference layered on top of the safety guarantees, upheld whenever it does not conflict with (i).
+We assume a nominal controller $u_i^\mathrm{nom}$ that achieves (iii) but not necessarily (i) or (ii). 
+The task is a distributed policy that enforces the latter two while deviating minimally from $u_i^\mathrm{nom}$, with the deviation steered by precedence toward the robots that can afford it.

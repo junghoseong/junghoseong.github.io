@@ -1,0 +1,346 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+.link-block a {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 400;
+}
+
+.publication-title strong {
+  font-weight: 700;
+}
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-affiliations {
+  color: #4a4a4a;
+}
+
+.publication-venue-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.publication-links {
+  margin-top: 1.25rem;
+}
+
+.publication-links .button {
+  margin: 0.25rem;
+}
+
+.section-alt {
+  background-color: #f8fafc;
+}
+
+.section-figure {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.figure-caption {
+  color: #475569;
+  font-size: 0.95rem;
+  margin: 1rem auto 0;
+  max-width: 1000px;
+  text-align: left;
+}
+
+.figure-caption strong {
+  color: #334155;
+}
+
+.section-lead {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  color: #475569;
+}
+
+/* Real-world demonstration: portrait video + key-frame storyboard */
+.demo-block {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.demo-block .demo-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.demo-block .demo-credit {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-video-portrait {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  max-height: 72vh;
+  margin: 0 auto;
+  border-radius: 8px;
+  background: #000;
+}
+
+.demo-block .demo-variant {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.demo-block .demo-variant-label {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.keyframe-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.keyframe-card {
+  text-align: center;
+}
+
+.keyframe-card img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.keyframe-card .keyframe-time {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3730a3;
+  background: #eef2ff;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.keyframe-card .keyframe-caption {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: #334155;
+}
+
+.keyframe-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.keyframe-legend .legend-dot {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  border-radius: 50%;
+  vertical-align: -0.1em;
+  margin-right: 0.35rem;
+  border: 2px solid currentColor;
+}
+
+.keyframe-legend .legend-red { color: #e11d48; }
+.keyframe-legend .legend-yellow { color: #d97706; }
+
+@media screen and (max-width: 1023px) {
+  .keyframe-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .keyframe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .demo-block {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* Contribution cards */
+.contrib-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.contrib-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.contrib-card .contrib-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.contrib-card h3 {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.contrib-card p {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+@media screen and (max-width: 1023px) {
+  .contrib-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Experiments: two result blocks */
+.result-block {
+  max-width: 1000px;
+  margin: 0 auto 3rem;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.result-block:last-child {
+  margin-bottom: 0;
+}
+
+.result-block .result-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.result-block .result-text {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: justify;
+  margin-bottom: 1.25rem;
+}
+
+.result-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+}
+
+.result-stat {
+  min-width: 150px;
+  flex: 1 1 150px;
+  max-width: 220px;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.result-stat .stat-value {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.result-stat .stat-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+@media screen and (max-width: 600px) {
+  .result-block {
+    padding: 1.25rem 1rem;
+  }
+  .result-block .result-text {
+    text-align: left;
+  }
+  .result-stat {
+    flex: 1 1 120px;
+    min-width: 120px;
+    padding: 0.7rem 0.5rem;
+  }
+  .result-stat .stat-value {
+    font-size: 1.2rem;
+  }
+}

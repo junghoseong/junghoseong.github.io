@@ -1,0 +1,29 @@
+For multi-robot right-of-way coordination, we aim to 1) construct uncertainty-calibrated upper bounds for future energy requirements; 
+2) use these bounds to determine a unique energy-guided yielding order; and
+3) encode the resulting order via responsibility-aware CBF constraints while preserving pairwise collision avoidance.
+The problem is formulated as follows.
+
+\begin{problem}[Energy-Guided Right-of-Way Coordination]
+\label{prob:main}
+Given the robot dynamics in Eq.~\eqref{eq:motion_dynamics}, the measured augmented states $\{z_i\}_{i\in\mathcal{A}}$, and a target violation level $\delta\in(0,1)$, construct calibrated future-cost bounds and control inputs satisfying the following requirements.
+
+\begin{enumerate}
+    \item \textbf{Uncertainty-calibrated energy bounds:} for each calibrated sequence of future energy requirements $\{c_\ell\}$, construct upper estimates $\{\bar{c}_\ell\}$ such that
+    \begin{equation}
+        \limsup_{L\rightarrow\infty}\frac{1}{L}\sum_{\ell=1}^L\mathbbm{1}\{c_\ell>\bar{c}_\ell\}\leq \delta.
+        \label{eq:target_violation_rate}
+    \end{equation}
+
+    \item \textbf{Energy-guided precedence:} Using the uncertainty-calibrated future energy estimates, construct energy-based precedence scores $\{\mu_i\}_{i\in\mathcal{A}}$ that reflect each robot's flexibility to accommodate the additional cost of yielding. For every interacting pair $(i, j)$, the robot with the larger score is assigned to yield, with ties resolved by a fixed rule. When multiple conflicts arise, all pairwise decisions follow the common ordering induced by $\{\mu_i\}_{i\in\mathcal{A}}$.
+    
+    \item \textbf{Safety-preserving precedence integration:} encode the selected yielding order through complementary responsibility allocations while ensuring
+    \begin{equation}
+        h_{ij}(x_i(0), x_j(0)) \geq 0 \Longrightarrow h_{ij}(x_i(t),x_j(t))\geq 0,
+        \label{eq:pairwise_safety_objective}
+    \end{equation}
+    for all $t\geq 0$ and every interacting pair $(i, j)$.
+    % When multiple conflicts arise, all pairwise decisions follow the common ordering induced by $\{\mu_i\}_{i\in\mathcal{A}}$.
+    
+\end{enumerate}
+
+\end{problem}

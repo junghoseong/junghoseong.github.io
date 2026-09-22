@@ -1,0 +1,39 @@
+Using the calibrated bounds in Eq.~\eqref{eq:calibrated_energy_bound}, define the minimum calibrated cost bound for each trajectory type as
+\begin{equation}
+    \overline c_i^\tau:=\min_{k\in\{1,\ldots,K\}}\overline c_{i,k}^\tau,
+    \qquad
+    k_i^\tau\in\arg\min_k \overline c_{i,k}^\tau,
+    \label{eq:minimum_calibrated_cost}
+\end{equation}
+where station ties are resolved by a fixed rule.
+The station-reachability certificate and energy margin are then defined~as
+\begin{equation}
+    h_{e,i}=V_i-V_{\min}-\overline c_i^{\mathrm{sta}},
+    \qquad
+    \mu_i=V_i-V_{\min}-\overline c_i^{\mathrm{task}}.
+    \label{eq:calibrated_energy_quantities}
+\end{equation}
+If $h_{e,i}\geq0$ and the station-cost bound is not violated, then
+\begin{equation}
+    V_i - V_{\min}-c_{i, k_i^\mathrm{sta}}^{\mathrm{sta}}
+    \geq V_i - V_{\min} -\overline{c}_{i, k_i^{\mathrm{sta}}}^{\mathrm{sta}} = h_{e, i} \geq 0.
+    \label{eq:conditional_station_reachability}
+\end{equation}
+Thus, $h_{e,i}\geq0$ provides a conditional certificate that robot $i$ can reach the selected station without falling below $V_{\min}$.
+At runtime, $h_{e,i}$ is evaluated as an online station-reachability certificate, but is not imposed as a control constraint.
+
+For right-of-way coordination, a larger $\mu_i$ indicates greater flexibility to accommodate the additional cost of yielding.
+For an interacting pair $(i,j)$, define
+\begin{equation}
+    i\rightarrow j
+    \quad\Longleftrightarrow\quad
+    \mu_i>\mu_j
+    \;\;\text{or}\;\;
+    \bigl(\mu_i=\mu_j \text{ and } i>j\bigr),
+    \label{eq:energy_precedence}
+\end{equation}
+where $i\rightarrow j$ means that robot $i$ yields to robot $j$.
+Because the margins and robot indices define a strict total order, each interacting pair receives exactly one yielding direction.
+Any subset of pairwise relations induced by this order is therefore acyclic.
+The robot index is used only when the calibrated margins are equal; all non-tied decisions are determined by the energy-sufficiency margins.
+The ordering in Eq.~\eqref{eq:energy_precedence} satisfies the energy-guided precedence requirement of Problem~\ref{prob:main}.

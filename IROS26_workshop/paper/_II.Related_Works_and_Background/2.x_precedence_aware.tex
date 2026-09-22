@@ -1,0 +1,6 @@
+Resolving a symmetric encounter requires the two robots to agree on who defers, that is, a \emph{precedence} between them.
+Conventional approaches fix this agreement at design time, through equal sharing of the avoidance burden~\cite{wang2017safety}, or traffic-inspired right-of-way rules~\cite{celi2019deconfliction}.
+Such conventions are blind to the robots' circumstances, and schemes that perturb robots out of the resulting deadlocks~\cite{grover2023before, chandra2025deadlock} break ties in directions just as arbitrary.
+Recent work instead determines the agreement at run time, learning responsibility shares from interaction data~\cite{cosner2023learning, remy2025learning}, or negotiating them through repeated bid exchange~\cite{autenrieb2025auction}.
+This adaptivity comes at a cost, requiring a separate allocation model to train or a consensus protocol to run.
+\textit{Our approach keeps the adaptivity without the cost. Each robot quantifies its own energy sufficiency as a scalar, and a single exchange of these scalars fixes the precedence.}

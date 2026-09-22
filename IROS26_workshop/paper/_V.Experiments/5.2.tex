@@ -1,0 +1,8 @@
+\textbf{Setup.} We deployed eight Crazyflie 2.1 quadrotors under an OptiTrack motion capture system to execute a dense position-exchange task, utilizing Crazyswarm to broadcast nominal trajectories~\cite{preiss2017crazyswarm}.
+Given the close proximity of the congested intersection, agents reliably exchanged their standard local states (e.g., pose and velocity) alongside their individual calibrated energy margins. 
+While the local state information was used to enforce a responsibility-aware CBF with a 0.4~m safety margin, the single scalar energy margin uniquely determined the pairwise yielding precedence. 
+This critical separation allows agents to safely coordinate without relying on bandwidth-intensive trajectory sharing.
+
+\textbf{Results and Implications.} Throughout the demonstration, this decentralized approach successfully resolved all spatial conflicts, resulting in zero collisions. 
+As illustrated in Fig.~\ref{fig:fig4}, the precedence cue induced a strictly asymmetric yielding behavior: agents with lower energy margins (depicted in red) retained their right-of-way for direct traversal, whereas agents with higher margins (depicted in yellow) actively absorbed the collision-avoidance responsibility to yield safely. 
+Ultimately, this experiment confirms that coupling safety-critical state feedback with a low-overhead, energy-guided priority signal provides a scalable, robust foundation for long-term multi-agent operations in the field.

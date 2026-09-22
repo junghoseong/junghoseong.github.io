@@ -1,0 +1,26 @@
+Consider a control-affine system $\dot{x} = f(x) + g(x)u$, where $x \in \mathcal{X}\subseteq \mathbb{R}^n$, $u\in\mathcal{U}\subseteq\mathbb{R}^m$, $f$ and $g$ are locally Lipschitz, and $\mathcal{U}$ is a convex polytope.
+Let $h:\mathcal{D}\rightarrow\mathbb{R}$ be continuously differentiable on an open domain $\mathcal{D}$ and define the safe set~as
+\begin{equation}
+    \mathcal{S} = \{\, x \in \mathcal{D} : h(x) \ge 0 \,\}.
+    \label{eq:safe_set}
+\end{equation}
+The function $h$ is a control barrier function (CBF) if there exists an extended class-$\mathcal{K}$ function $\alpha$ such that
+\begin{equation}
+    \sup_{u\in\mathcal{U}}\big[ L_f h(x) + L_g h(x)u \big]\geq -\alpha\big(h(x)\big)
+    \quad \forall x \in \mathcal{D},
+    \label{eq:cbf_condition}
+\end{equation}
+where $L_f h = \nabla h^\top f$ and $L_g h = \nabla h^\top g$ are the Lie derivatives of $h$.
+Under standard regularity conditions, any locally Lipschitz controller satisfying the corresponding CBF constraint renders $\mathcal{S}$ forward invariant~\cite{ames2019control}.
+
+In multi-agent safety, responsibility quantifies how much each agent is expected to contribute to maintaining a shared constraint.
+Existing CBF-based methods derive this allocation from social preferences, contextual interaction data, or collision risk~\cite{lyu2022responsibility, cosner2023learning, remy2025learning, lyu2023risk}.
+For a pair with shared barrier $h_{ij}$, a responsibility-aware CBF requires agent $i$ to enforce
+\begin{equation}
+    L_{g_i} h_{ij} u_i + \frac{1}{2}(L_{f_{ij}}h_{ij} + \alpha_c (h_{ij})) - \gamma_{ij} \geq 0,
+    \label{eq:responsibility_cbf}
+\end{equation}
+where $L_{f_{ij}} h_{ij}$ collects the drift contributions of both agents.
+A larger $\gamma_{ij}$ tightens the constraint and assigns agent $i$ a greater safety-preserving contribution.
+When $\gamma_{ji}=-\gamma_{ij}$, the paired constraints recover the standard CBF condition when summed.
+In this work, we use this allocation to encode energy-guided precedence: the yielding robot receives greater collision-avoidance responsibility.

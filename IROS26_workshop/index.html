@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Energy-Guided Priority under Battery Uncertainty for Multi-Robot Coordination">
+  <meta name="keywords" content="multi-robot coordination, right-of-way, control barrier function, adaptive conformal inference, battery uncertainty, energy-aware planning, Crazyflie">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Energy-Guided Priority under Battery Uncertainty for Multi-Robot Coordination</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Energy-Guided Priority under Battery Uncertainty for Multi-Robot Coordination</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">Hoseong Jung</a><sup>1</sup></span>&emsp;
+            <span class="author-block">Sungil Son<sup>1</sup></span>&emsp;
+            <span class="author-block">Inkyu Jang<sup>2</sup></span>&emsp;
+            <span class="author-block">H. Jin Kim<sup>1</sup></span>&emsp;
+            <span class="author-block">Jungwon Park<sup>3*</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors publication-affiliations">
+            <span class="author-block"><sup>1</sup>Seoul National University</span>&emsp;
+            <span class="author-block"><sup>2</sup>University of California, Berkeley</span>&emsp;
+            <span class="author-block"><sup>3</sup>Seoul National University of Science and Technology</span>
+          </div>
+          <div class="is-size-6 publication-authors publication-affiliations" style="margin-top: 0.25rem;">
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
+          </div>
+
+          <div class="publication-venue-badge">IROS 2026 Workshop</div>
+
+          <div class="publication-links">
+            <a class="button is-dark is-rounded" href="./paper.pdf" target="_blank" rel="noopener noreferrer">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a class="button is-dark is-rounded" href="#demo">
+              <span class="icon"><i class="fas fa-video"></i></span>
+              <span>Video</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser" id="demo">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <h2 class="title is-4 has-text-centered" style="margin-bottom: 1rem;">Real-World Demonstration</h2>
+
+      <div class="demo-block">
+        <h3 class="demo-title title is-4">8-Agent Congested Intersection</h3>
+        <p class="demo-credit">
+          Eight Crazyflie 2.1 quadrotors exchange positions through a shared intersection. Only the calibrated energy margin <em>&mu;<sub>i</sub></em> is exchanged to decide who yields.
+        </p>
+        <video class="demo-video-portrait"
+               src="./demo_video.mp4"
+               poster="./static/images/demo_poster.jpg"
+               controls preload="metadata" playsinline>
+          Your browser does not support the video tag.
+        </video>
+
+        <div class="demo-variant">
+          <p class="demo-variant-label">
+            <strong>Key frames:</strong> the red agent has the smaller energy margin and therefore higher precedence; the yellow agent has a larger margin and absorbs the avoidance responsibility.
+          </p>
+          <div class="keyframe-grid">
+            <div class="keyframe-card">
+              <img src="./static/images/keyframe_0.png" alt="Key frame at t0: quadrotors hover at their start slots after takeoff.">
+              <span class="keyframe-time">t = t<sub>0</sub></span>
+              <p class="keyframe-caption">Takeoff: hover at start slots</p>
+            </div>
+            <div class="keyframe-card">
+              <img src="./static/images/keyframe_1.png" alt="Key frame at t1: red and yellow agents converge on the intersection.">
+              <span class="keyframe-time">t = t<sub>1</sub></span>
+              <p class="keyframe-caption">Converging on the intersection</p>
+            </div>
+            <div class="keyframe-card">
+              <img src="./static/images/keyframe_2.png" alt="Key frame at t2: the yellow agent with the larger energy margin holds while the red agent passes.">
+              <span class="keyframe-time">t = t<sub>2</sub></span>
+              <p class="keyframe-caption">Yellow (larger <em>&mu;</em>) holds; red passes</p>
+            </div>
+            <div class="keyframe-card">
+              <img src="./static/images/keyframe_3.png" alt="Key frame at t3: the red agent has passed and both head to their goals.">
+              <span class="keyframe-time">t = t<sub>3</sub></span>
+              <p class="keyframe-caption">Red has passed; head to goals</p>
+            </div>
+            <div class="keyframe-card">
+              <img src="./static/images/keyframe_4.png" alt="Key frame at t4: agents have landed on their swapped goals.">
+              <span class="keyframe-time">t = t<sub>4</sub></span>
+              <p class="keyframe-caption">Landed on the swapped goals</p>
+            </div>
+          </div>
+          <div class="keyframe-legend">
+            <span class="legend-red"><span class="legend-dot"></span>Smaller <em>&mu;</em>: higher precedence, keeps its path</span>
+            <span class="legend-yellow"><span class="legend-dot"></span>Larger <em>&mu;</em>: more flexibility, yields</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="subtitle has-text-centered" style="font-size: 1.4rem; margin: 1.5rem auto 0; max-width: 1200px;">
+        <strong>TL;DR:</strong> We turn each robot's calibrated energy sufficiency margin into a single scalar right-of-way cue. Adaptive conformal inference keeps the margin trustworthy under cell-specific battery degradation, and a responsibility-aware CBF makes the robot with more energy to spare yield, so collision avoidance stays safe while agents exchange far less than full trajectories.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Key Idea</h2>
+    <p class="section-lead">
+      When robots cross paths in the field, someone has to yield. Instead of exchanging full planned trajectories, each robot broadcasts only how much energy it expects to have left after finishing its task and reaching a charger. The robot with the larger margin can afford the detour, so it yields.
+    </p>
+    <img src="./static/images/fig1_concept.png" class="section-figure" style="max-width: 1100px;"
+         alt="Energy-guided right-of-way coordination: (a) a right-of-way conflict, (b) energy-guided precedence from calibrated margins, (c) precedence encoded in a responsibility-aware CBF.">
+    <p class="figure-caption">
+      <strong>Energy-guided right-of-way coordination.</strong>
+      <strong>(a)</strong> Multiple robots compete for right of way in a congested encounter.
+      <strong>(b)</strong> Calibrated precedence cues <em>&mu;<sub>i</sub></em> determine a unique yielding order, where a smaller <em>&mu;<sub>i</sub></em> indicates higher precedence and a larger <em>&mu;<sub>i</sub></em> indicates greater flexibility to yield.
+      <strong>(c)</strong> The order is encoded through a responsibility-aware CBF term (<em>&gamma;</em>), assigning greater avoidance responsibility to the yielding robot while preserving pairwise safety.
+    </p>
+
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-bolt"></i></span>
+        <h3>Energy Sufficiency as a Precedence Criterion</h3>
+        <p>
+          The energy expected to remain after task completion and travel to a charging station determines pairwise right-of-way. Exchanging only this scalar yields a unique ordering and reduces communication overhead for conflict resolution.
+        </p>
+      </div>
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-chart-line"></i></span>
+        <h3>Uncertainty-Calibrated Energy Estimates</h3>
+        <p>
+          A battery-specific proxy model predicts the energy needed to reach a station directly and after the task. Adaptive conformal inference turns these predictions into bounds whose long-run violation rate is held at a prescribed level, giving conservative margins and a conditional station-reachability certificate.
+        </p>
+      </div>
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-shield-alt"></i></span>
+        <h3>Safety-Preserving Precedence Integration</h3>
+        <p>
+          Precedence is encoded in a responsibility-aware CBF by assigning unequal avoidance contributions within each interacting pair. The paired constraints preserve the underlying collision-avoidance condition regardless of who yields, and a common energy-based ordering prevents cyclic precedence.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Method Overview</h2>
+    <p class="section-lead">
+      The framework runs in two stages: an uncertainty-calibrated, energy-based precedence cue, followed by its safety-preserving integration into the local CBF quadratic program.
+    </p>
+    <img src="./static/images/fig2_method.png" class="section-figure" style="max-width: 1200px;"
+         alt="Overview of the energy-guided precedence framework: adaptive calibration under battery model-error drift, calibrated energy-based precedence cue, and safety-preserving precedence integration.">
+    <p class="figure-caption">
+      <strong>Overview of the proposed energy-guided precedence framework.</strong>
+      <strong>(a)</strong> Adaptive conformal inference calibrates battery-model error under distribution shift, producing an adaptive quantile <em>q<sub>&#8467;</sub>(&beta;<sub>&#8467;</sub>)</em> at the target violation level.
+      <strong>(b)</strong> The calibrated task-cost bound defines the energy-based precedence cue <em>&mu;<sub>i</sub> = V<sub>i</sub> &minus; V<sub>min</sub> &minus; c&#772;<sub>i</sub><sup>task</sup></em>.
+      <strong>(c)</strong> The resulting yielding order is encoded through CBF responsibility allocations, so the yielding robot assumes greater avoidance responsibility while pairwise safety is preserved.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Experiments</h2>
+
+    <div class="result-block">
+      <h3 class="result-title title is-4">Real-World Battery Calibration</h3>
+      <p class="result-text">
+        To capture realistic discharge statistics under dynamic flight profiles, we collected about three hours of active flight data across 200 sorties from a Crazyflie 2.1 fleet, sourced from 14 individual single-cell LiPo batteries. A physically parameterized load-voltage proxy model is fit to this data and evaluated with a strict held-out split for each cell.
+        Adaptive conformal inference drives the running violation frequency below the target level and robustly bounds the error across all cells under distribution shift, whereas a fixed-quantile baseline fails to adapt to cell-specific degradation.
+      </p>
+      <img src="./static/images/fig3_calibration.png" class="section-figure" style="max-width: 760px;"
+           alt="Battery calibration performance: running violation frequency converging below the target 0.1, and per-cell violation rates for the adaptive method versus a fixed-quantile baseline.">
+      <p class="figure-caption">
+        <strong>Battery calibration performance.</strong>
+        <strong>(Left)</strong> The running violation frequency converges below the target <em>&delta;</em> = 0.1.
+        <strong>(Right)</strong> The adaptive method bounds errors across 14 cells, outperforming the fixed-quantile baseline.
+      </p>
+      <div class="result-stats">
+        <div class="result-stat"><div class="stat-value">14</div><div class="stat-label">battery cells</div></div>
+        <div class="result-stat"><div class="stat-value">200</div><div class="stat-label">flight sorties (~3 h)</div></div>
+        <div class="result-stat"><div class="stat-value">0.068</div><div class="stat-label">mean violation, adaptive (ours)</div></div>
+        <div class="result-stat"><div class="stat-value">0.116</div><div class="stat-label">mean violation, fixed quantile</div></div>
+      </div>
+    </div>
+
+    <div class="result-block">
+      <h3 class="result-title title is-4">Hardware Validation of Energy-Guided Precedence</h3>
+      <p class="result-text">
+        Eight Crazyflie 2.1 quadrotors under an OptiTrack motion capture system execute a dense position-exchange task, with Crazyswarm broadcasting nominal trajectories. Agents exchange their local states and their calibrated energy margins. The local states enforce a responsibility-aware CBF with a 0.4 m safety margin, while the single scalar energy margin alone fixes the pairwise yielding precedence.
+        The decentralized approach resolved every spatial conflict with zero collisions and induced strictly asymmetric yielding: agents with lower margins (red) kept their right-of-way for direct traversal, while agents with higher margins (yellow) actively absorbed the avoidance responsibility.
+      </p>
+      <img src="./static/images/fig4_hardware.png" class="section-figure" style="max-width: 1000px;"
+           alt="Hardware validation in an 8-agent congested intersection: agents move to opposite positions, and the yellow agent yields so the red agent keeps its direct path.">
+      <p class="figure-caption">
+        <strong>Hardware validation in an 8-agent congested intersection.</strong>
+        <strong>(Left)</strong> Agents move to opposite positions, creating spatial conflicts. The red agent has a higher energy-guided priority than the yellow agent.
+        <strong>(Right)</strong> Enforcing the calibrated precedence cue, the yellow agent actively yields, allowing the red agent to safely maintain its direct path.
+      </p>
+      <div class="result-stats">
+        <div class="result-stat"><div class="stat-value">8</div><div class="stat-label">Crazyflie 2.1 quadrotors</div></div>
+        <div class="result-stat"><div class="stat-value">0.4 m</div><div class="stat-label">CBF safety margin</div></div>
+        <div class="result-stat"><div class="stat-value">1 scalar</div><div class="stat-label">exchanged for precedence</div></div>
+        <div class="result-stat"><div class="stat-value">0</div><div class="stat-label">collisions</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <h3 class="title is-5">Motivation</h3>
+          <p>
+            As multi-agent systems transition from structured environments to unpredictable domains, communication constraints and energy autonomy become critical operational bottlenecks.
+          </p>
+          <h3 class="title is-5">Problem</h3>
+          <p>
+            Heterogeneous usage introduces battery uncertainty across identical hardware, complicating reliable planning. Conventional right-of-way resolution also relies on bandwidth-intensive exchanges of planned trajectories or task intents.
+          </p>
+          <h3 class="title is-5">Approach</h3>
+          <p>
+            We explicitly calibrate this usage-induced uncertainty to enable a highly scalable, low-bandwidth coordination strategy. We explore right-of-way coordination as a downstream task, where exchanging the energy sufficiency margin serves as a precedence cue during close encounters.
+          </p>
+          <h3 class="title is-5">Method</h3>
+          <p>
+            Future energy needs are estimated via a cell-specific proxy model, with prediction errors rigorously calibrated using adaptive conformal inference. These calibrated margins dictate a unique yielding order, embedded into a responsibility-aware control barrier function (CBF) to enforce asymmetric collision avoidance.
+          </p>
+          <h3 class="title is-5">Results</h3>
+          <p>
+            Validations show that this precedence cue maintains safety with slight energy efficiency gains during local encounters. The calibrated framework is ultimately more suited for comprehensive mission planning to achieve true long-term autonomy in the wild.
+          </p>
+          <h3 class="title is-5">Limitations and Future Work</h3>
+          <p>
+            Confining the calibrated margin exclusively to a CBF formulation is inherently myopic for system-wide energy optimization. Future work will integrate this framework into higher-level mission planning architectures, such as global task allocation and long-horizon pathfinding, toward lifelong energy autonomy in disaster scenarios.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page uses the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>
+        and is licensed under a <a rel="license"
+        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
