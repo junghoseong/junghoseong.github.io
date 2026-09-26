@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="EFXPLORER: Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration (NeurIPS 2026)">
+  <meta name="keywords" content="multi-agent reinforcement learning, exploration, intrinsic reward, epigraph form, constrained optimization, successor distance, MAPPO, SMAX, VMAS, MPE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EFXPLORER: Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Sungil Son<sup>*</sup></span>&emsp;
+            <span class="author-block">
+              <a href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">Hoseong Jung</a><sup>*</sup></span>&emsp;
+            <span class="author-block">Dahyun Oh<sup>*</sup></span>&emsp;
+            <span class="author-block">H. Jin Kim</span>
+          </div>
+
+          <div class="is-size-5 publication-authors publication-affiliations">
+            <span class="author-block">Seoul National University</span>
+          </div>
+          <div class="is-size-6 publication-authors publication-affiliations" style="margin-top: 0.25rem;">
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+          </div>
+
+          <div class="publication-venue-badge">NeurIPS 2026</div>
+
+          <div class="publication-links">
+            <button class="button is-dark is-rounded" type="button" disabled title="The paper will be linked here once it is public.">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper (coming soon)</span>
+            </button>
+            <a class="button is-dark is-rounded" href="#demo">
+              <span class="icon"><i class="fas fa-video"></i></span>
+              <span>Video</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser" id="demo">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <h2 class="title is-4 has-text-centered" style="margin-bottom: 1rem;">Exploration That Does Not Break Coordination</h2>
+
+      <div class="demo-block">
+        <h3 class="demo-title title is-4">VMAS-balance: four agents carry a payload on a rod to the target</h3>
+        <p class="demo-credit">
+          Both policies receive the same successor-distance intrinsic reward. The only difference is how exploration is combined with the task objective.
+        </p>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <span class="compare-label is-baseline">Linear reward mixing &nbsp;<em>r = r<sup>ext</sup> + &lambda; r<sup>int</sup></em></span>
+            <video src="./figures/coordination_collapse.mp4"
+                   poster="./static/images/poster_collapse.jpg"
+                   autoplay muted loop playsinline controls preload="metadata">
+              Your browser does not support the video tag.
+            </video>
+            <p class="compare-caption">
+              <strong>Coordination collapse.</strong> The intrinsic bonus distorts the objective. Agents chase novelty, the rod tilts, and the payload is dropped.
+            </p>
+          </div>
+          <div class="compare-card">
+            <span class="compare-label is-ours">EFXPLORER &nbsp;<em>min{ A<sup>ext</sup>, V<sup>int</sup> &minus; z }</em></span>
+            <video src="./figures/emerge_coordination_efxplorer.mp4"
+                   poster="./static/images/poster_efxplorer.jpg"
+                   autoplay muted loop playsinline controls preload="metadata">
+              Your browser does not support the video tag.
+            </video>
+            <p class="compare-caption">
+              <strong>Emergent coordination.</strong> Exploration is allowed only while the budget lasts and task progress is preserved, so the team explores briefly, then carries the payload to the target together.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="subtitle has-text-centered" style="font-size: 1.4rem; margin: 1.5rem auto 0; max-width: 1200px;">
+        <strong>TL;DR:</strong> <span class="method-name">EFXPLORER</span> lets agents explore only as much as the team can afford. Instead of adding an intrinsic bonus to the task reward, it maximizes exploration subject to a constraint that task performance does not degrade, solves this in epigraph form with adaptive per-agent exploration budgets, and drives exploration with long-horizon successor-distance novelty. The result is new cooperative strategies on SMAX, VMAS, and MPE with no reward-mixing coefficient to tune.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">More Demonstrations</h2>
+    <p class="section-lead">
+      SMAX <em>5m_vs_6m</em>: five allied marines (blue) versus six enemy marines (green). Winning a numerically inferior fight requires a maneuver that plain reward maximization rarely discovers.
+    </p>
+    <div class="demo-block">
+      <div class="compare-grid">
+        <div class="compare-card">
+          <span class="compare-label is-baseline">MAPPO</span>
+          <img class="compare-media" src="./figures/MAPPO_dontexplore_smax.gif" alt="MAPPO on SMAX 5m_vs_6m: the blue team engages head-on and is eliminated.">
+          <p class="compare-caption">
+            <strong>No exploration.</strong> The team engages head-on and is eliminated within a few steps.
+          </p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-label is-ours">EFXPLORER-MAPPO</span>
+          <img class="compare-media" src="./figures/EFXPLORER_explore_smax.gif" alt="EFXPLORER on SMAX 5m_vs_6m: the blue team pulls back, stretches the pursuing enemy into a line, and defeats them.">
+          <p class="compare-caption">
+            <strong>Explored maneuver.</strong> The team pulls back to a corner, stretches the pursuing enemy into a line, and defeats them.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Why Not Just Add an Intrinsic Bonus?</h2>
+    <p class="section-lead">
+      Successful coordination occupies only a tiny subspace of the joint state-action space, so cooperative MARL leans on task-agnostic exploration signals. But a linearly mixed bonus can overshadow the task objective, and one agent's greedy exploration makes the environment non-stationary for its teammates, who mistake the temporary drop for failure and abandon the joint behavior.
+    </p>
+    <img src="./static/images/motivation.png" class="section-figure" style="max-width: 1200px;"
+         alt="Cooperative balancing task: (a) linear reward combination distorts objectives and collapses coordination; (b) EFXPLORER gates exploration with a min operator so coordination emerges.">
+    <p class="figure-caption">
+      <strong>Cooperative balancing task</strong> with four agents transporting a payload on a rod to a target.
+      <strong>(a)</strong> Naive linear reward combinations induce objective misalignment, destabilizing coordination.
+      <strong>(b)</strong> <span class="method-name">EFXPLORER</span> leverages a min-function to conservatively gate exploration, enabling coordination to emerge progressively without sacrificing task performance.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Method</h2>
+    <p class="section-lead">
+      <span class="method-name">EFXPLORER</span> maximizes each agent's intrinsic return subject to a non-degradation constraint on the joint extrinsic return, rewrites the problem in epigraph form, and solves it by alternating between a policy update against a stepwise min-bottleneck and an outer update of the exploration budgets.
+    </p>
+    <img src="./static/images/main_method.png" class="section-figure" style="max-width: 1200px;"
+         alt="Overview of EFXPLORER: (a) conservative exploration framework with exploration budgets and an epigraph min objective; (b) successor distance-based intrinsic reward from factorized per-agent episodic novelty.">
+    <p class="figure-caption">
+      <strong>Overview of <span class="method-name">EFXPLORER</span>.</strong>
+      <strong>(a)</strong> Conservative exploration: the epigraph objective uses a min operator to balance task progress and budget-adjusted exploration, while an outer loop adapts the budget \(z\).
+      <strong>(b)</strong> Factorized episodic novelty: per-agent successor distance (SD) networks estimate temporal proximity to derive individual intrinsic rewards \(r^{\mathrm{int}}_{i,t}\).
+    </p>
+
+    <div class="eq-block">
+      <p class="eq-title">Constrained exploration, in epigraph form</p>
+      <div class="is-hidden-mobile">
+      \[
+        \begin{aligned}
+          &\max_{z}\; z := \sum_{i\in\mathcal{N}} z^i \\[0.35em]
+          \text{s.t.}\quad
+          &\max_{\boldsymbol{\pi}}\;\min\Big\{\,
+            \color{#b91c1c}{J_{\mathrm{ext}}(\boldsymbol{\pi}) - J_{\mathrm{ext}}(\hat{\boldsymbol{\pi}})}\,,\;
+            \color{#1d4ed8}{J_{i,\mathrm{int}}(\pi^i) - z^i}
+          \Big\} \ge 0,\quad \forall i \in \mathcal{N}
+        \end{aligned}
+      \]
+      </div>
+      <div class="is-hidden-tablet">
+      \[
+        \begin{aligned}
+          &\max_{z}\; z := \sum_{i\in\mathcal{N}} z^i \\[0.35em]
+          \text{s.t.}\;\;
+          &\max_{\boldsymbol{\pi}}\;\min\Big\{\,
+            \color{#b91c1c}{J_{\mathrm{ext}}(\boldsymbol{\pi}) - J_{\mathrm{ext}}(\hat{\boldsymbol{\pi}})}\,, \\[0.2em]
+          &\qquad\qquad\;\;
+            \color{#1d4ed8}{J_{i,\mathrm{int}}(\pi^i) - z^i}
+          \Big\} \ge 0,\;\; \forall i \in \mathcal{N}
+        \end{aligned}
+      \]
+      </div>
+      <p class="eq-note">
+        The <span class="term-task">task-progress term</span> and the <span class="term-explore">intrinsic surplus over the budget \(z^i\)</span> are coupled by a single min operator: exploration counts only when the team is not losing task performance relative to the reference policy \(\hat{\boldsymbol{\pi}}\). No trade-off coefficient is introduced.
+      </p>
+    </div>
+
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-compress-alt"></i></span>
+        <h3>Stepwise epigraph bottleneck</h3>
+        <p>
+          The episode-level constraint is turned into a per-step signal by augmenting the state with the remaining budget. Each agent's update is driven by the smaller of the reference task advantage and its intrinsic surplus, which gives a conservative sufficient condition for feasibility and a standard likelihood-ratio policy gradient.
+        </p>
+        <div class="eq">\(\mathcal{B}^{\mathrm{epi}}_{i} = \min\{A^{\mathrm{ext}}_{\hat{\boldsymbol{\pi}}}(s_t,\mathbf{a}_t),\; S^{\mathrm{int}}_{i}(\tilde{s}^i_t,\mathbf{a}_t)\}\)</div>
+      </div>
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-battery-three-quarters"></i></span>
+        <h3>Adaptive exploration budgets</h3>
+        <p>
+          The outer loop grows the budgets \(z^i\) only from rollouts whose Monte Carlo task return beats a running reference. Among those feasible rollouts it picks the one with the largest collective intrinsic return and moves the budgets toward it with rate \(\alpha_z\). If nothing is feasible, the budgets stay put.
+        </p>
+        <div class="eq">\(z^{i,k+1}_0 \leftarrow \alpha_z\, \hat{z}^{\,i,k,m^\ast}_0 + (1-\alpha_z)\, z^{i,k}_0\)</div>
+      </div>
+      <div class="contrib-card">
+        <span class="contrib-icon"><i class="fas fa-route"></i></span>
+        <h3>Long-horizon novelty via successor distance</h3>
+        <p>
+          Each agent learns a quasimetric successor distance on its own state space with a symmetric InfoNCE objective. The intrinsic reward is the minimum learned temporal distance to the states already visited in the episode, so agents are pushed toward temporally distant states rather than locally surprising ones.
+        </p>
+        <div class="eq">\(r^{\mathrm{int}}_{i,t}(s^i_t) = \min_{k \in [0,t)} d_{\phi_i}(s^i_k, s^i_t)\)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Results</h2>
+
+    <div class="result-block">
+      <h3 class="result-title title is-4">Comparison to Cooperative MARL Baselines</h3>
+      <p class="result-text">
+        We evaluate on cooperative tasks from SMAX, VMAS, and MPE, including <em>MPE-corridor</em>, a new scenario that forces decentralized coordination in a narrow passage. All methods share the same backbone architecture and evaluation protocol. <span class="method-name">EFXPLORER</span> improves normalized returns on both centralized-training (MAPPO) and independent-learner (IPPO) backbones. Baselines that inject intrinsic signals through social influence, entropy regularization, or enforced diversity (COIN, HASAC, DiCO) let those signals dominate learning, which destabilizes teammates and can collapse coordination.
+      </p>
+      <img src="./static/images/result1.png" class="section-figure" style="max-width: 1000px;"
+           alt="Normalized average return curves on VMAS-balance, VMAS-give way, VMAS-transport, VMAS-wheel, MPE-corridor, MPE-tag, SMAX-3s5z_vs_3s6z, and SMAX-5m_vs_6m for EFXPLORER-MAPPO, EFXPLORER-IPPO, MAPPO, IPPO, HASAC, COIN, and DiCO.">
+      <p class="figure-caption">
+        <strong>Performance comparison of <span class="method-name">EFXPLORER</span> with cooperative MARL baselines.</strong> Solid lines show the mean over 5 random seeds, while shaded regions correspond to the standard deviation.
+      </p>
+      <div class="result-stats">
+        <div class="result-stat"><div class="stat-value">3</div><div class="stat-label">benchmark suites (SMAX, VMAS, MPE)</div></div>
+        <div class="result-stat"><div class="stat-value">8</div><div class="stat-label">cooperative tasks in the main comparison</div></div>
+        <div class="result-stat"><div class="stat-value">2</div><div class="stat-label">backbones (MAPPO, IPPO)</div></div>
+        <div class="result-stat"><div class="stat-value">5</div><div class="stat-label">seeds per curve</div></div>
+      </div>
+    </div>
+
+    <div class="result-block">
+      <h3 class="result-title title is-4">Epigraph Form vs. Linear Scalarization and Lagrangian Relaxation</h3>
+      <p class="result-text">
+        The same constrained objective can be attacked with a scalarized reward \(J_{\mathrm{ext}} + \beta \sum_i J_{i,\mathrm{int}}\) (MAPPO-Linear) or with a primal-dual multiplier (MAPPO-Lagrangian). Both are brittle: on <em>MPE-corridor</em>, \(\beta = 0.1\) explores well while \(0.02\) or \(1\) degrade performance, and the Lagrangian variant needs a heavily weighted initialization (\(\lambda_0 = 1\)) to avoid coordination collapse. <span class="method-name">EFXPLORER</span> stays competitive across all tasks with no such coefficient to tune.
+      </p>
+      <img src="./static/images/result2.png" class="section-figure" style="max-width: 1000px;"
+           alt="Normalized average return on MPE-corridor, VMAS-balance, VMAS-give way, and SMAX-3s5z_vs_3s6z for EFXPLORER versus MAPPO-Linear with beta 0.02, 0.1, 1 and MAPPO-Lagrangian with lambda0 0.2 and 1.">
+      <p class="figure-caption">
+        <strong>Performance comparison with alternative optimization strategies.</strong> Solid lines show the mean across 5 random seeds; shaded regions indicate the standard deviation. <code>Linear(&beta;)</code> and <code>Lag(&lambda;<sub>0</sub>)</code> denote the scalarization weight and the multiplier initialization, respectively.
+      </p>
+    </div>
+
+    <div class="result-block">
+      <h3 class="result-title title is-4">Exploration Budget Ablation</h3>
+      <p class="result-text">
+        Fixed budgets fail at both extremes: <em>EF-z<sub>0</sub></em> suppresses exploration entirely, while <em>EF-z<sub>max</sub></em> over-drives it and destabilizes coordination. The adaptive budget resolves this by matching exploration pressure to task feasibility. The update rate \(\alpha_z\) sets how reactive the budget is: a small value (0.1) suits simpler tasks like <em>VMAS-balance</em>, while a large value (0.7) accelerates discovery in the tight <em>MPE-corridor</em> bottleneck. Further ablations on state factorization, the intrinsic reward design, and the feasibility set are in the paper.
+      </p>
+      <img src="./static/images/result_ablation.png" class="section-figure" style="max-width: 760px;"
+           alt="Exploration budget ablation on MPE-corridor and VMAS-balance: adaptive budgets with different alpha_z versus fixed EF-z0 and EF-zmax.">
+      <p class="figure-caption">
+        <strong>Exploration budget \(z\).</strong> Ablation of fixed-budget variants and update rates \(\alpha_z\), evaluated with <span class="method-name">EFXPLORER</span>-MAPPO. Solid lines show the mean over 5 seeds; shaded regions indicate the standard deviation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Case Study: <em>MPE-corridor</em></h2>
+    <p class="section-lead">
+      Eight agents, four per side, must pass through a corridor that fits at most two at a time to reach mirrored goals on the opposite side. The distance-to-goal reward becomes locally misleading at the corridor entrance, so pure goal pursuit produces collisions and stalls the team.
+    </p>
+    <img src="./static/images/qual_analysis.png" class="section-figure" style="max-width: 1200px;"
+         alt="Qualitative analysis on MPE-corridor: (a) episode snapshots t1 to t5; (b) per-agent intrinsic reward landscapes, chosen actions, and reward traces at t2, t3, t4.">
+    <p class="figure-caption">
+      <strong>Qualitative analysis on <em>MPE-corridor</em>.</strong>
+      <strong>(a)</strong> Episode snapshots (\(t_1\)&ndash;\(t_5\)) illustrating multi-agent interactions in the narrow passage.
+      <strong>(b)</strong> Stepwise diagnostics for agents 1&ndash;3 (\(t_2\)&ndash;\(t_4\)): intrinsic reward landscapes over candidate next states, action directions maximizing extrinsic or intrinsic reward, executed actions, and corresponding instantaneous reward traces.
+      When novelty points toward unproductive motion (toward a wall or away from the goal), <span class="method-name">EFXPLORER</span> suppresses it and executes a task-aligned action (\(t_2\), \(t_4\)). At the corridor bottleneck (\(t_3\)) it permits a conservative detour to avoid collision: the extrinsic reward dips while the intrinsic reward spikes, so exploration is triggered exactly to resolve the interaction bottleneck.
+    </p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 0.5rem;">Benchmarks</h2>
+    <p class="section-lead" style="margin-bottom: 0;">
+      Tasks span continuous-control team sports from VMAS, particle-world coordination from MPE, and StarCraft micromanagement from SMAX, run through the JaxMARL and BenchMARL interfaces.
+    </p>
+    <div class="bench-grid">
+      <div class="bench-card"><img src="./static/images/tasks/balance.png" alt="VMAS balance task"><div class="bench-name">VMAS-balance</div></div>
+      <div class="bench-card"><img src="./static/images/tasks/give_way.png" alt="VMAS give way task"><div class="bench-name">VMAS-give way</div></div>
+      <div class="bench-card"><img src="./static/images/tasks/transport.png" alt="VMAS transport task"><div class="bench-name">VMAS-transport</div></div>
+      <div class="bench-card"><img src="./static/images/tasks/wheel_modified.png" alt="VMAS wheel task"><div class="bench-name">VMAS-wheel</div></div>
+    </div>
+    <div class="bench-pills">
+      <span class="bench-pill"><strong>MPE</strong> corridor (new)</span>
+      <span class="bench-pill"><strong>MPE</strong> tag</span>
+      <span class="bench-pill"><strong>SMAX</strong> 3s5z_vs_3s6z</span>
+      <span class="bench-pill"><strong>SMAX</strong> 5m_vs_6m</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <h3 class="title is-5">Motivation</h3>
+          <p>
+            Discovering cooperative behavior in multi-agent reinforcement learning (MARL) is challenging due to the combinatorial complexity of joint state-action spaces, which hinders the emergence of coordinated behaviors from trial-and-error alone.
+          </p>
+          <h3 class="title is-5">Problem</h3>
+          <p>
+            Intrinsic rewards are often used to aid discovery, but naively combining them with team objectives can distort the learning signal, compromising task performance.
+          </p>
+          <h3 class="title is-5">Approach</h3>
+          <p>
+            We propose <span class="method-name">EFXPLORER</span>, a constrained exploration framework that maximizes exploration objectives subject to a constraint that preserves established task performance. We solve the resulting problem using an epigraph reformulation that introduces adaptive exploration budgets. This approach separates intrinsic rewards from task objectives and regulates exploration through task feasibility.
+          </p>
+          <h3 class="title is-5">Method</h3>
+          <p>
+            To further encourage diverse and temporally extended exploration, we incorporate a successor distance-based intrinsic reward that captures long-horizon dependencies.
+          </p>
+          <h3 class="title is-5">Results</h3>
+          <p>
+            Empirically, our method outperforms strong baselines and induces novel cooperative strategies across SMAX, VMAS, and MPE benchmark suites.
+          </p>
+          <h3 class="title is-5">Future Work</h3>
+          <p>
+            Our current evaluation focuses on state-based setups; scaling <span class="method-name">EFXPLORER</span> to high-dimensional observations such as raw images is an important next step. A further direction is broadening the epigraph formulation to jointly manage exploration, safety constraints, and human preferences within a unified framework.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page uses the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>
+        and is licensed under a <a rel="license"
+        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
